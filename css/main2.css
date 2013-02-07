@@ -1,0 +1,118 @@
+@charset "utf-8";
+/* CSS Document */
+body{background:url(../images/bodybg.jpg) top center repeat-x #0f2403; }
+body,div{margin:0 auto;padding:0;}
+
+div.bodyimage{background:url(../images/bodyimage.jpg) top center no-repeat;}
+div.topsite{width:960px;height:70px;margin:0 auto;}
+div.languages{
+width: 400px;
+height: 19px;
+float: right;
+margin-top: 17px;
+padding-right: 9px;
+text-align: right;
+}
+.languages img{
+border:none;
+opacity:0.5;
+-khtml-opacity: 0.4;
+-moz-opacity:0.4;
+filter: alpha(opacity=40);
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+}
+.languages img:hover{
+border:none;
+opacity:1; 
+-khtml-opacity: 1;
+-moz-opacity:1;
+filter: alpha(opacity=100);
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+}
+	a.language{display:inline-block; width:31px;height:19px;}
+	a.language.pl{width:29px;background:url(../images/flagi/pl.jpg);}
+	a.language.pl.selected{background:url(../images/flagi/pl_hov.jpg);}
+	a.language.en{background:url(../images/flagi/eng.jpg);}
+	a.language.en.selected{background:url(../images/flagi/eng_hov.jpg);}
+	a.language.de{background:url(../images/flagi/de.jpg);}
+	a.language.de.selected{background:url(../images/flagi/de_hov.jpg);}
+	a.language.fr{background:url(../images/flagi/fr.jpg);}
+	a.language.fr.selected{background:url(../images/flagi/fr_hov.jpg);}
+	
+div.topmenu{width:960px;height:30px; text-align:center;position:relative;z-index:1500; }
+div.banerscontainer{width:960px;height:350px;background:#FFFFFF; overflow:hidden;}
+	div.zdjecia{width:960px;height:350px; position:absolute;z-index:500;}
+	div.zdjecia img{position:absolute;display:none;}
+	div.zdjecia img.widoczny{display:block;}
+	div.przyslona{width:960px;height:350px;background:url(../images/przyslona.png); position:absolute; z-index:600; }
+
+div.sitemap{width:960px;height:20px;padding-top:5px;background:#FFFFFF;font-size:12px;font-family:Tahoma;line-height:20px;text-indent:30px;}
+div.sitemap span{display:inline-block;width:20px;height:9px;background:url(../images/topmenu/dropdown_linkbg_selected.gif) center center no-repeat;}	
+	
+div.sitecontainer{width:960px;background:url(../images/bgcontent.jpg) top center no-repeat #FFFFFF; overflow:hidden;padding-bottom:80px;}
+div.left{width:290px;float:left; clear: none;}
+div.right{width:640px;float:left; clear: none;}
+div.footer{width:960px;height:50px; background:url(../images/stopka.jpg);}
+	div.footer span,div.footer a{display:inline-block; float:left;padding-left:10px;padding-right:10px; font-family:Arial; font-size:12px; line-height:14px; 
+	color:rgb(14, 82, 226);margin-top:22px;}
+	div.footer span.first{margin-left:30px;}
+	div.footer span.selected{text-decoration:underline;}
+	div.footer a{float:right;text-decoration:none;margin-right:20px;}
+	div.footer a span{display:inline-block;float:none;margin:0;padding:0; background:url(../images/kostka.jpg) center left no-repeat; text-indent:20px;}
+	div.footer a span b{font-weight:normal;color:#FF0000;}
+	div.footer a:hover span{text-decoration:underline;}
+	
+div.underfooter{width:960px;height:50px;font-family:Arial;font-size:10px; color:#cde5ce;line-height:30px;text-align:center;}	
+	
+div.leftmenu{width:270px; margin-left: -20px; margin-top: -73px; background:url(../images/contact_bg.jpg) 0 0 no-repeat; height: 300px;}
+div.leftmenu2{
+	width: 290px;
+	margin-left: 10px;
+	float: left;
+	
+margin-top: 10px;
+background: url(../images/contact_bg.jpg) 0 0 no-repeat;
+height: 237px;
+	}
+	div.leftmenu{
+	width: 292px;
+margin-left: 10px;
+margin-top: 46px;
+background: url(../images/contact_bg.jpg) 0 0 no-repeat;
+height: 300px;
+	}
+	/*div.leftmenu a{display:block; width:230px; height:20px; line-height:20px; padding:3px; color:#033f03; font-family:Arial; font-size:12px;text-decoration:none;
+	font-weight:bold;}
+	div.leftmenu a:hover{background:#d9f6d5; }*/
+	.kushoto{ margin: 0px 0px 0px 14px;padding-top: 20px; float: left;   }
+	.kushoto ul { list-style-type:none;margin:0;padding:0;text-decoration:none; }
+	.kushoto ul h2 a{ color:#000000; font-size: 20px;margin-left: -15px;}
+	.kushoto ul h2 { margin-top: 5px;margin-bottom: 5px;	}
+	.kushoto ul li { margin-bottom: 5px;	}
+	.kushoto ul li a {  text-decoration:none; color:#033f03; font-family:Arial; font-size:12px; font-weight:bold; line-height: 20px; }
+	/*.kushoto ul li { margin: 10px 0px 10px 0px}*/
+	.kushoto ul  a {  text-decoration:none; color:#033f03; font-family:Arial; font-size:14px;  line-height: 20px; }
+	.kushoto ul  a:hover {  background:#d9f6d5;  }
+	.kushoto ul li a:hover{ background:#d9f6d5; }
+	/*div.leftmenu2 .kushoto{
+		margin: 0px 0px 0px 14px;padding-top: 10px;
+	}*/
+	/*#kushoto a{display:block; width:230px; height:20px; line-height:20px; padding:3px; color:#033f03; font-family:Arial; font-size:12px;text-decoration:none;   font-weight:bold; }*/
+	
+div.contactinformation{width:230px;margin-top:30px;}	
+div.contactinformation p{padding:0; margin:0; color:#044904;font-size:11px; line-height:18px; font-family:Tahoma;}
+div.contactinformation p span{font-size:14px;font-weight:bold;line-height:32px;}
+#facebook{
+	width: 300px;
+	height: 300px;
+	margin-left: 15px;
+	margin-top: 10px;
+}
+
+#logo img{
+	position: absolute;
+top: 0.9%;
+left: 44%;
+border: none;
+padding: 0px
+}
