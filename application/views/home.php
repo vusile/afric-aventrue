@@ -1,12 +1,5 @@
 
-  <script>
-$('#myCarousel').carousel({
-      interval: 5000,
-      pause: "hover"
-    });
 
-
-   </script>
 <div class="row">
 				<div class="span12 ">
           <div class="slider">
@@ -39,3 +32,11 @@ $('#myCarousel').carousel({
               </div>
 				</div>  <!-- emd of span 12 -->
 			</div>   <!-- end of row -->
+        <script>
+$('#myCarousel').carousel({
+      interval: 5000,
+      pause: "hover"
+    });
+
+
+   </script>
