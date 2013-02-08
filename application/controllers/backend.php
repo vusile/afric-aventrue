@@ -29,19 +29,19 @@ class Backend extends CI_Controller {
 		$this->db->where($url_column,$url);
 		$obj=$this->db->get($table);
 
-		if($table=='afric_aventure_pages')
-		{
-			$this->db->where('id',$id);
-			$objs=$this->db->get($table);
+		// if($table=='afric_aventure_pages')
+		// {
+		// 	$this->db->where('id',$id);
+		// 	$objs=$this->db->get($table);
 
-			if($objs->row()->url != '')
-				$url=$objs->row()->url;
+		// 	if($objs->row()->url != '')
+		// 		$url=$objs->row()->url;
 			
 
-		}
+		// }
 
-		else
-		{
+		// else
+		// {
 		
 			if($obj->num_rows() > 0)
 			{
@@ -53,7 +53,7 @@ class Backend extends CI_Controller {
 					$url = $this->make_url_from_title($url . '-' . $url,$table,$id);
 			
 			}
-		}
+		// }
 		
 		return $url;
 		

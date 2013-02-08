@@ -1,3 +1,11 @@
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=186440414739082";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <div class="row">
 				<div class="span12 full_width_contact_form">
           <h1><?php if(isset($title)) echo $title ?></h1>
@@ -181,8 +189,8 @@
                 <label class="control-label accurate" for="park">Parks:</label>
                 <div class="controls">
                    
-                 <select multiple="multiple" required>
-                   <option>Please Select the Parks you like</option>
+                 <select multiple="multiple" required style = "height: 200px;">
+                   
                   <?php foreach($parks->result() as $park): ?> 
                 <option><?php echo $park->title ?></option>
                 <?php endforeach; ?>
@@ -197,8 +205,8 @@
               <div class="control-group">
                 <label class="control-label" for="beach"> Beaches:</label>
                 <div class="controls">
-                   <select multiple="multiple" required>
-                   <option>Please Select the Beaches you like</option>
+                   <select multiple="multiple" required style = "height: 200px;">
+
                   <?php foreach($beaches->result() as $beach): ?> 
                 <option><?php echo $beach->title ?></option>
                 <?php endforeach; ?>
@@ -219,8 +227,8 @@
                  <div class="control-groupA">
                 <label class="control-label accurate" for="themes">Themes:</label>
                 <div class="controls">
-                  <select multiple="multiple" required>
-                     <option>Please Select the Themes you like</option>
+                  <select multiple="multiple" required style = "height: 200px;">
+                    
                    <option label="Beach Vacation Themes" style="color:#c88132;font-weight:bold;"></option>
                   <?php foreach($beaches_afric_aventure_beach_vacations->result() as $themed): ?> 
                  
@@ -289,8 +297,19 @@
           </form>
         </div> <!--  end of span 9 -->
         <div class="span2">
-          
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum qui in tempore odio consequuntur et reprehenderit dolore porro ullam voluptatibus. Sit explicabo saepe provident iure quod hic labore animi distinctio.</p>
+<!--           <div class="fb-like" data-href="http://www.facebook.com/pages/AfricAventure/91990565246?sid=0.017556388396769762" data-send="false" data-layout="box_count" data-width="450" data-show-faces="true"></div>
+          <script type="text/javascript" src="http://cdn.dev.skype.com/uri/skype-uri.js"></script>
+<div id="genSkypeCall_01">
+    <script type="text/javascript">
+        Skype.ui({
+            name: "call",
+            element: "genSkypeCall_01",
+            participants: ["vusile1"],
+            imageSize: 32,
+            imageColor: "skype"
+        });
+    </script>
+</div> -->
       </div>
 
 

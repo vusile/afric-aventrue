@@ -143,6 +143,7 @@ class Fr extends CI_Controller {
 		$data['title'] = $query->row()->title;
 		$header['title']=$query->row()->title;
 		$data['text'] = $query->row()->text;
+		$header['en']='beach/' . $query->row()->en_url;
 		$menu['menu'] = $this->menu();
 		$this->load->view('header',$header);
 		$this->load->view('menu',$menu);

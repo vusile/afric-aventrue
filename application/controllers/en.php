@@ -138,12 +138,12 @@ class En extends CI_Controller {
 	public function beach($url)
 	{   
 		$header['color']='#091626';
-		$this->db->where('url', $url);
+		$this->db->where('en_url', $url);
 		$query = $this->db->get('afric_aventure_beach_vacations');
 		$data['title'] = $query->row()->en_title;
 		$header['title']=$query->row()->en_title;
 		$header['fr']='plage/' . $query->row()->url;
-		$data['text'] = $query->row()->text;
+		$data['text'] = $query->row()->en_text;
 		$menu['menu'] = $this->menu();
 		$this->load->view('header',$header);
 		$this->load->view('menu',$menu);

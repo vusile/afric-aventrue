@@ -33,7 +33,11 @@
 		<div class="row header">
 			    
 				<div class="span9 logo">
+					<?php if($this->uri->segment(1) =="en" ): ?>
 					<a href="#"><img src="img/logo-01.png" alt="Afric' Aventure"></a>
+					<?php else: ?>
+					<a href="#"><img src="img/logo-02.png" alt="Afric' Aventure"></a>
+					<?php endif; ?>
 					</div> <!-- end of span9  --> 
 					<div class="span3 flag">
 

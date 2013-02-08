@@ -16,7 +16,7 @@
 }
 
 .flag  img{
-margin: 145px 0px 0px 140px;
+margin: 145px 0px 0px 180px;
 }
 .flag  p{
     color: #ffffff;
@@ -127,7 +127,8 @@ margin:0px;
   }
  
 .full_width hr{
-margin: 30px 0px 5px 0px;
+margin: 50px 0px 10px 0px;
+clear: both;
 }
 .teaser h1{
     color: #ffffff;
@@ -5301,7 +5302,7 @@ a.thumbnail:hover {
 .carousel-control.right {
   left: auto;
   right: 800px;
-top: 368px;
+/*top: 368px;*/
 }
 .carousel-control:hover {
   color: #ffffff;

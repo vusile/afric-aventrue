@@ -94,8 +94,8 @@ $config['Thumbnails'] = Array(
 		'directory' => $baseDir . '_thumbs',
 		'enabled' => true,
 		'directAccess' => false,
-		'maxWidth' => 100,
-		'maxHeight' => 100,
+		'maxWidth' => 200,
+		'maxHeight' => 200,
 		'bmpSupported' => false,
 		'quality' => 80);
 
