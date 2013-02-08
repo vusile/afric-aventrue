@@ -44,6 +44,7 @@
                       <option value="41-50">41-50</option>
                       <option value="51-60">51-60</option>
                       <option value="61-70">61-70</option>
+                     <option value="61-70">71-80</option>
                   </select>
                 </div>
               </div> 
@@ -84,6 +85,8 @@
               </div>
               
             </div>   <!-- end of span4 -->
+
+
              <div class="span4">
                 
                  <div class="control-group">
@@ -94,28 +97,63 @@
                 </div>
               </div>
             </div><!-- end of span4 -->
+
             </div>
-            <div class="row">
-               <div class="span4">
+
+             <p>How Many Days?</p>
+             <div class="row">
+            <div class="span4">
               <div class="control-groupA">
-                <label class="control-label" for="children">No. of Children:</label>
+                <label class="control-label estimated" for="estimated">Parks:</label>
                 <div class="controls">
-                  <input type="text" id="children" name="no_of_children" value="<?php echo set_value('no_of_children'); ?>" placeholder="">
+                  <input type="text"  id="days_for_parks" name="estimated" value="<?php echo set_value('days_for_parks'); ?>" placeholder="" required>
 
                 </div>
               </div>
               
             </div>   <!-- end of span4 -->
+         
+             
              <div class="span4">
                 
                  <div class="control-group">
-                <label class="control-label accurate" for="age">Age:</label>
+                <label class="control-label accurate" for="accurate">Beaches:</label>
                 <div class="controls">
-                  <input type="text" id="age" name="age_children" value="<?php echo set_value('age_children'); ?>" placeholder="">
+                  <input type="text" id="days_for_beaches" name="accurate" value="<?php echo set_value('days_for_beaches'); ?>" placeholder="" required>
 
                 </div>
               </div>
-             </div>  <!-- end of span4 -->
+            </div><!-- end of span4 -->
+            </div>
+
+            <div class="row"> <!--  start of row -->
+              <div class="span9">  <!-- start of span 9 -->
+                <div id="total_days">
+                 <div class="control-group">
+                <label class="control-label accurate" for="accurate">Total:</label>
+                <div class="controls">
+                  <input type="text" id="total" name="total_days">
+                </div>
+              </div>
+
+
+                </div>
+              </div> <!--  end of span9 -->
+            </div>   <!--  end of row -->
+            <div class="row">
+               <div class="span9">
+              <div class="control-groupA">
+                <label class="control-label" for="children">No. of Children:</label>
+                <div class="controls">
+                  <input type="text" id="children" name="no_of_children" value="<?php echo set_value('no_of_children'); ?>" placeholder="">
+                  <p style="margin-left:214px;margin-top:-24px;"><em>Hint: Between 5 and 12 years old</em></p>
+
+
+                </div>
+              </div>
+              
+            </div>   <!-- end of span9 -->
+             
              </div>
              <div class="row">
              <div class="span4">
@@ -130,13 +168,7 @@
             </div>   <!-- end of span4 -->
              <div class="span4">
                 
-                 <div class="control-group">
-                <label class="control-label accurate" for="age-adult">Age:</label>
-                <div class="controls">
-                  <input type="text" id="age-adult" name="age_adults" value="<?php echo set_value('age_adults'); ?>" placeholder="" required>
-
-                </div>
-              </div>
+                
              </div>  <!-- end of span4 -->
              </div>
               <div class="row">
@@ -257,7 +289,7 @@
                    <div class="span4">
                   <p>How often have you travelled to Africa?</p>
                  <div class="control-groupA">
-                <label class="control-label accurate" for="travels">No. of Travels:</label>
+               
                 <div class="controls">
                   <input type="text" id="travels" name="travels" value="<?php echo set_value('travels'); ?>" placeholder="">
 
@@ -267,16 +299,18 @@
              <div class="span4"></div> 
              </div>
               <legend>Others:</legend>
-                <p>How did you Reach Our Website?</p>
-                <label class="checkbox inline">
-                  <input type="checkbox" id="inlineCheckbox1" value="option1"> &nbsp;Online
-                </label>
-                <label class="checkbox inline">
-                  <input type="checkbox" id="inlineCheckbox2" value="option2"> &nbsp;A Friend
-                </label>
-                <label class="checkbox inline">
-                  <input type="checkbox" id="inlineCheckbox3" value="option3"> &nbsp;Other
-                </label>
+                 <p>How did you Reach Our Website?</p>
+                <div class="row">
+               <div class="span4">
+                <div class="control-groupA">
+               
+                <div class="controls">
+                  <input type="text" id="reach_website" name="reach_website" value="<?php echo set_value('reach_website'); ?>" placeholder="">
+
+                </div>
+              </div>
+              </div>
+            </div>   <!-- end of row -->
                  <p style="margin-top:10px;">Other Comments:</p>
                <div class="control-group">  
                     <textarea rows="3" id="contact_checkbox" name="comments" value="<?php echo set_value('comments'); ?>"></textarea>
