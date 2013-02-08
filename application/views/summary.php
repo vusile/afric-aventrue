@@ -3,13 +3,7 @@
         <div class="span12 ">
           <div class="full_width">
            <h1><?php echo $toptitle; ?></h1>
-           <?php
-       if(($show=='destinations')||($show=='themes')){
-         $page='beach';
-     }else{
-      $page='safari';
-     }
-     ?>
+
        <?php foreach($query->result() as $destinations): ?>
             <h2><a href="<?php echo $page ?>/<?php  echo $destinations->url  ?>"><?php echo $destinations->title ?></a></h2>
             

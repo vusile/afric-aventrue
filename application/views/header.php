@@ -37,8 +37,11 @@
 					</div> <!-- end of span9  --> 
 					<div class="span3 flag">
 
-						<a href="#"><img src="img/flags-01.png" alt=""></a>
-
+						<?php if($this->uri->segment(1) =="en" ): ?>
+							<a href="<?php echo $fr ?>"><img src="img/flags-01.png" alt=""></a>
+						<?php else: ?>
+							<a href="en/<?php echo $en ?>"><img src="img/flags-02.png" alt=""></a>
+						<?php endif; ?>
 						</div>   <!-- end of span3 -->
          
 		</div>  <!--  end of row -->	

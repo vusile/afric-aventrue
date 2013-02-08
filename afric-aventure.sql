@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 07, 2013 at 01:21 PM
+-- Generation Time: Feb 08, 2013 at 04:27 AM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -31,15 +31,17 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_accomodations` (
   `title` varchar(100) NOT NULL,
   `category` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `afric_aventure_accomodations`
 --
 
 INSERT INTO `afric_aventure_accomodations` (`id`, `title`, `category`) VALUES
-(1, 'Lorem Luxury', 3),
-(2, 'Lorem Executive classic hotel', 3);
+(1, 'Test Accommodation', 15),
+(2, 'Test Accommodation 2', 16),
+(3, 'Test Accommodation 3', 17),
+(4, 'Test Accommodation 4', 18);
 
 -- --------------------------------------------------------
 
@@ -50,25 +52,24 @@ INSERT INTO `afric_aventure_accomodations` (`id`, `title`, `category`) VALUES
 CREATE TABLE IF NOT EXISTS `afric_aventure_accomodations_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(75) NOT NULL,
+  `en_title` varchar(255) NOT NULL,
   `parent` int(11) NOT NULL,
   `url` varchar(160) NOT NULL,
+  `en_url` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `afric_aventure_accomodations_categories`
 --
 
-INSERT INTO `afric_aventure_accomodations_categories` (`id`, `title`, `parent`, `url`) VALUES
-(1, 'By Park', 0, 'by-park'),
-(2, 'By Beach', 0, 'by-beach'),
-(3, 'Nat Park 1', 1, 'nat-park-1'),
-(4, 'Nat Park 2', 1, 'nat-park-2'),
-(5, 'Beach 1', 2, 'beach-1'),
-(6, 'Beach 2', 2, 'beach-2'),
-(7, 'Nat Park 3', 1, 'nat-park-3'),
-(8, 'Test Beach', 2, 'test-beach'),
-(9, 'National Park Test', 1, 'national-park-test');
+INSERT INTO `afric_aventure_accomodations_categories` (`id`, `title`, `en_title`, `parent`, `url`, `en_url`) VALUES
+(1, 'De la Parc', 'By Park', 0, 'de-la-parc', 'by-park'),
+(2, 'De la Plage', 'By Beach', 0, 'de-la-plage', 'by-beach'),
+(15, 'Parc National 1', 'National Parc 1', 1, 'parc-national-1', 'national-parc-1'),
+(16, 'Parc National 2', 'National Park 2', 1, 'parc-national-2', 'national-park-2'),
+(17, 'Plage 1', 'Beach 1', 2, 'plage-1', 'beach-1'),
+(18, 'Plage 2', 'Beach 2', 2, 'plage-2', 'beach-2');
 
 -- --------------------------------------------------------
 
@@ -83,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_accomodations_sliders` (
   `slide_title` varchar(70) NOT NULL,
   `slide_teaser` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `afric_aventure_accomodations_sliders`
@@ -91,7 +92,13 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_accomodations_sliders` (
 
 INSERT INTO `afric_aventure_accomodations_sliders` (`id`, `accomodation_id`, `slide_pic`, `slide_title`, `slide_teaser`) VALUES
 (1, 1, 'http://dummyimage.com/780x400/f2f2f2/fff', 'hi', 'this is s test'),
-(2, 1, 'http://dummyimage.com/780x400/ffffff/fff', 'Testing Slider', 'This is a test.');
+(2, 1, 'http://dummyimage.com/780x400/ffffff/fff', 'Testing Slider', 'This is a test.'),
+(3, 2, 'http://dummyimage.com/780x400/cdcdcd/fff', 'hi', 'this is s test'),
+(4, 2, 'http://dummyimage.com/780x400/cccccc/fff', 'Testing Slider', 'This is a test.'),
+(5, 3, 'http://dummyimage.com/780x400/ffffff/fff', 'hi', 'this is s test'),
+(6, 3, 'http://dummyimage.com/780x400/000000/fff', 'Testing Slider', 'This is a test.'),
+(7, 4, 'http://dummyimage.com/780x400/aaaaaa/fff', 'hi', 'this is s test'),
+(8, 4, 'http://dummyimage.com/780x400/dddddd/fff', 'Testing Slider', 'This is a test.');
 
 -- --------------------------------------------------------
 
@@ -117,24 +124,26 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_album_images` (
 CREATE TABLE IF NOT EXISTS `afric_aventure_beach_vacations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(75) NOT NULL,
+  `en_title` varchar(255) NOT NULL,
   `category` int(11) NOT NULL,
   `description` text NOT NULL,
   `url` varchar(160) NOT NULL,
+  `en_url` varchar(255) NOT NULL,
   `thumbnail` varchar(100) NOT NULL,
   `text` text NOT NULL,
+  `en_text` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `afric_aventure_beach_vacations`
 --
 
-INSERT INTO `afric_aventure_beach_vacations` (`id`, `title`, `category`, `description`, `url`, `thumbnail`, `text`) VALUES
-(1, 'Coco Beach', 1, '<p>\r\n	Blah blah</p>\r\n', 'coco-beach', 'Koala.jpg', '<p>\r\n	<img alt="" src="/afric-aventure/ckfinder/userfiles/images/Koala.jpg" style="width: 300px; height: 225px; float: right;" />Suspendisse eu justo et diam lobortis eleifend. Sed in sodales erat. Curabitur sollicitudin ligula non nisl elementum sit amet ultricies erat suscipit. Donec vitae lacus in leo condimentum mollis a ut quam. Mauris eget leo purus, a pharetra urna. Nunc adipiscing magna eget purus laoreet dignissim. Aliquam congue sem at erat sagittis adipiscing ac et diam. Donec adipiscing diam rutrum eros mattis non convallis nibh imperdiet. Phasellus blandit, neque a eleifend elementum, mi metus facilisis felis, sit amet tempus erat ante ut arcu. Aliquam at molestie felis. Maecenas aliquam, ipsum id scelerisque consectetur, felis mauris bibendum nisl, et egestas orci enim non nulla. Sed dignissim purus vel magna interdum hendrerit. Vivamus ipsum odio, ultrices egestas faucibus at, scelerisque a tellus. Aenean consequat ligula non nisl laoreet vehicula.</p>\r\n'),
-(2, 'Nunc gravida congue sapien ', 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur laoreet iaculis sollicitudin. Maecenas ut arcu felis. Morbi non justo eros. Nullam laoreet molestie tincidunt. In hac habitasse platea dictumst. Ut dapibus dui a elit accumsan vehicula. Maecenas feugiat, velit vitae pharetra consequat, lectus leo congue augue, vitae cursus erat ligula nec dui. Suspendisse eu dolor nunc. Integer sodales, est eget dignissim iaculis, lorem ipsum ornare turpis, id condimentum nibh orci sagittis nisi. Nulla eu auctor ligula. Nunc gravida congue sapien at venenatis. In non porttitor risus. Proin luctus, metus sed consectetur viverra, erat metus condimentum erat, ut adipiscing risus augue quis urna. Phasellus tincidunt turpis vitae purus tincidunt tempus.', 'nunc-gravida-congue-sapien', 'ppp.jpg', '<p>\r\n	This is a test paragraph.</p>\r\n<p>\r\n	<img alt="" src="/afric-aventure/ckfinder/userfiles/images/ppp.jpg" style="width: 100px; height: 100px; float: left;" /></p>\r\n'),
-(3, 'Proin luctus, metus sed consectetur', 2, 'erat ligula nec dui. Suspendisse eu dolor nunc. Integer sodales, est eget dignissim iaculis, lorem ipsum ornare turpis, id condimentum nibh orci sagittis nisi. Nulla eu auctor ligula. Nunc gravida congue sapien at venenatis. In non porttitor risus. Proin luctus, metus sed consectetur viverra, erat metus condimentum erat, ut adipiscing risus augue quis urna. Phasellus tincidunt turpis vitae purus tincidunt tempus.', 'proin-luctus-metus-sed-consectetur', 'demo2.jpg', '<p>\r\n	Fusce fringilla adipiscing blandit. Vestibulum bibendum pulvinar risus, ac rhoncus nisi fermentum condimentum.</p>\r\n<p>\r\n	<img alt="" src="/afric-aventure/ckfinder/userfiles/images/demo2.jpg" style="height: 200px; width: 470px; float: left;" /></p>\r\n<p>\r\n	Nullam iaculis, massa nec rutrum luctus, sem lectus mollis nunc, a varius nisl neque non mauris. Pellentesque pulvinar mollis risus, id venenatis neque viverra eu. Proin sit amet ante dolor, eget aliquam orci. In hac habitasse platea dictumst. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam elementum augue in tortor condimentum sit amet euismod tortor feugiat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed in lobortis lectus. Pellentesque vel libero in urna condimentum sagittis vehicula non quam. Quisque malesuada dignissim faucibus.</p>\r\n'),
-(5, 'Testing Titles', 2, '', 'testing-titles', 'demo1(1).jpg', '<p>\r\n	<img alt="" src="/afric-aventure/ckfinder/userfiles/images/demo1(1).jpg" style="height: 300px; width: 705px;" />Cras facilisis suscipit nisl, ut vulputate mi pellentesque ac. Morbi ligula purus, fermentum id feugiat a, consequat at enim. In pretium magna ac justo ullamcorper nec rhoncus velit feugiat. Vivamus quis felis dolor. Curabitur suscipit lobortis quam, in consequat mauris scelerisque a. Donec nulla ipsum, scelerisque vitae rhoncus sit amet, dapibus et enim. Vestibulum placerat ligula sed enim adipiscing ac condimentum nunc porta. Vivamus nec tortor dolor. Phasellus molestie sagittis dui, sit amet rhoncus libero pretium in. Morbi ipsum lorem, suscipit at ultrices eu, pharetra facilisis massa.</p>\r\n'),
-(6, 'Test Beach', 1, '', 'test-beach', '', '<p>\r\n	Test Beach</p>\r\n');
+INSERT INTO `afric_aventure_beach_vacations` (`id`, `title`, `en_title`, `category`, `description`, `url`, `en_url`, `thumbnail`, `text`, `en_text`) VALUES
+(3, 'Proin luctus, metus sed consectetur', '', 2, 'erat ligula nec dui. Suspendisse eu dolor nunc. Integer sodales, est eget dignissim iaculis, lorem ipsum ornare turpis, id condimentum nibh orci sagittis nisi. Nulla eu auctor ligula. Nunc gravida congue sapien at venenatis. In non porttitor risus. Proin luctus, metus sed consectetur viverra, erat metus condimentum erat, ut adipiscing risus augue quis urna. Phasellus tincidunt turpis vitae purus tincidunt tempus.', 'proin-luctus-metus-sed-consectetur', '', 'demo2.jpg', '<p>\r\n	Fusce fringilla adipiscing blandit. Vestibulum bibendum pulvinar risus, ac rhoncus nisi fermentum condimentum.</p>\r\n<p>\r\n	<img alt="" src="/afric-aventure/ckfinder/userfiles/images/demo2.jpg" style="height: 200px; width: 470px; float: left;" /></p>\r\n<p>\r\n	Nullam iaculis, massa nec rutrum luctus, sem lectus mollis nunc, a varius nisl neque non mauris. Pellentesque pulvinar mollis risus, id venenatis neque viverra eu. Proin sit amet ante dolor, eget aliquam orci. In hac habitasse platea dictumst. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam elementum augue in tortor condimentum sit amet euismod tortor feugiat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed in lobortis lectus. Pellentesque vel libero in urna condimentum sagittis vehicula non quam. Quisque malesuada dignissim faucibus.</p>\r\n', ''),
+(5, 'Testing Titles', '', 2, '', 'testing-titles', '', 'demo1(1).jpg', '<p>\r\n	<img alt="" src="/afric-aventure/ckfinder/userfiles/images/demo1(1).jpg" style="height: 300px; width: 705px;" />Cras facilisis suscipit nisl, ut vulputate mi pellentesque ac. Morbi ligula purus, fermentum id feugiat a, consequat at enim. In pretium magna ac justo ullamcorper nec rhoncus velit feugiat. Vivamus quis felis dolor. Curabitur suscipit lobortis quam, in consequat mauris scelerisque a. Donec nulla ipsum, scelerisque vitae rhoncus sit amet, dapibus et enim. Vestibulum placerat ligula sed enim adipiscing ac condimentum nunc porta. Vivamus nec tortor dolor. Phasellus molestie sagittis dui, sit amet rhoncus libero pretium in. Morbi ipsum lorem, suscipit at ultrices eu, pharetra facilisis massa.</p>\r\n', ''),
+(8, 'Plage 1', 'Beach 1', 1, '', 'plage-1', 'beach-1', '', '', ''),
+(9, 'Plage 2', 'Beach 2', 1, '', 'plage-2', 'beach-2', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -145,8 +154,10 @@ INSERT INTO `afric_aventure_beach_vacations` (`id`, `title`, `category`, `descri
 CREATE TABLE IF NOT EXISTS `afric_aventure_beach_vacation_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(75) NOT NULL,
+  `en_title` varchar(255) NOT NULL,
   `parent` int(11) NOT NULL,
   `url` varchar(160) NOT NULL,
+  `en_url` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
@@ -154,11 +165,9 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_beach_vacation_categories` (
 -- Dumping data for table `afric_aventure_beach_vacation_categories`
 --
 
-INSERT INTO `afric_aventure_beach_vacation_categories` (`id`, `title`, `parent`, `url`) VALUES
-(1, 'Beach Vacation Destinations', 0, 'destinations'),
-(2, 'Beach Vacation Themes', 0, 'themes'),
-(3, 'Hello', 0, ''),
-(4, 'kjfljfldfk', 21, '');
+INSERT INTO `afric_aventure_beach_vacation_categories` (`id`, `title`, `en_title`, `parent`, `url`, `en_url`) VALUES
+(1, 'Destinations de Vacances de Plage', 'Beach Vacation Destinations', 0, 'destinations-de-vacances-de-plage', 'beach-vacation-destinations'),
+(2, 'Thèmes de Vacances Plage', 'Beach Vacation Themes', 0, 'themes-de-vacances-plage', 'beach-vacation-themes');
 
 -- --------------------------------------------------------
 
@@ -173,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_captcha` (
   `word` varchar(20) NOT NULL,
   PRIMARY KEY (`captcha_id`),
   KEY `word` (`word`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=399 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=415 ;
 
 --
 -- Dumping data for table `afric_aventure_captcha`
@@ -235,7 +244,23 @@ INSERT INTO `afric_aventure_captcha` (`captcha_id`, `captcha_time`, `ip_address`
 (395, 1360238459, '127.0.0.1', 'GN68YMD'),
 (396, 1360238767, '127.0.0.1', 'S9QFVWA'),
 (397, 1360239048, '127.0.0.1', '4YRNUBS'),
-(398, 1360242275, '127.0.0.1', 'NEYG6H8');
+(398, 1360242275, '127.0.0.1', 'NEYG6H8'),
+(399, 1360258411, '127.0.0.1', 'RYKN8EB'),
+(400, 1360293865, '127.0.0.1', '5G2NJT6'),
+(401, 1360293884, '127.0.0.1', 'V2AGBF7'),
+(402, 1360294633, '127.0.0.1', 'XPTN56G'),
+(403, 1360295338, '127.0.0.1', '42HU3GK'),
+(404, 1360295409, '127.0.0.1', 'V2BPKFJ'),
+(405, 1360296383, '127.0.0.1', '4TXRYZS'),
+(406, 1360296399, '127.0.0.1', 'QVBJP7Y'),
+(407, 1360296443, '127.0.0.1', 'KGC7F89'),
+(408, 1360296495, '127.0.0.1', '7EZQRP4'),
+(409, 1360296607, '127.0.0.1', 'TNEJ7YK'),
+(410, 1360296805, '127.0.0.1', 'WR6U34S'),
+(411, 1360296809, '127.0.0.1', 'M58AY97'),
+(412, 1360296811, '127.0.0.1', 'DTGJKMW'),
+(413, 1360297594, '127.0.0.1', 'U9EVW8G'),
+(414, 1360297598, '127.0.0.1', '2XSEYKB');
 
 -- --------------------------------------------------------
 
@@ -325,13 +350,16 @@ INSERT INTO `afric_aventure_menu` (`id`, `label`, `link`, `parent`, `sort`) VALU
 CREATE TABLE IF NOT EXISTS `afric_aventure_pages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(70) NOT NULL,
+  `en_title` varchar(255) NOT NULL,
   `parent_page` int(11) NOT NULL,
   `url` varchar(255) NOT NULL,
+  `en_url` varchar(255) NOT NULL,
   `thumbnail` varchar(50) NOT NULL,
   `draws_from` varchar(100) NOT NULL,
   `priority` int(11) NOT NULL,
   `browser_title` varchar(70) NOT NULL,
   `text` text NOT NULL,
+  `en_text` text NOT NULL,
   `active` enum('TRUE','FALSE') NOT NULL DEFAULT 'FALSE',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
@@ -340,20 +368,18 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_pages` (
 -- Dumping data for table `afric_aventure_pages`
 --
 
-INSERT INTO `afric_aventure_pages` (`id`, `title`, `parent_page`, `url`, `thumbnail`, `draws_from`, `priority`, `browser_title`, `text`, `active`) VALUES
-(1, 'Home', 0, 'home', '', '', 1, 'Afric'' Aventure | Home', '', 'TRUE'),
-(2, 'Beach Vacations', 0, 'beach-vacations', '', 'afric_aventure_beach_vacation_categories', 2, 'Afric'' Aventure | Beach Vacations', '', 'TRUE'),
-(3, 'Safaris', 0, 'safaris', '', 'afric_aventure_safaris_categories', 3, 'Afric'' Aventure | Safaris', '', 'TRUE'),
-(4, 'Accomodations', 0, 'accomodations', '', 'afric_aventure_accomodations_categories', 4, 'Afric'' Aventure | Accomodations', '', 'TRUE'),
-(5, 'About Us', 0, 'about-us', '', '', 5, 'Afric'' Aventure | About Us', '<p>\r\n	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur laoreet iaculis sollicitudin. Maecenas ut arcu felis. Morbi non justo eros. Nullam laoreet molestie tincidunt. In hac habitasse platea dictumst. Ut dapibus dui a elit acuere tortor, eu ultricies nibh arcu non quam. Nunc blandit elit id dolor feugiat varius. Aenean consequat, est et pellentesque luctus, felis nisl vulputate sem, porttitor sodales nunc leo eu nisl. Vivamus sit amet nunc eu dolor eleifend blandit eu eget tortor. In<strong>teger ante velit, sagittis ac rhoncus non, adipiscing eget nunc. Morbi molestie nulla nec ante sollicitudin id lacinia erat rhoncus. Suspendisse odio arcu, bibendum id tincidunt eget, euismod non massa.</strong></p>\r\n<p>\r\n	Maecenas vel odio turpis. Donec sapien ante, accumsan et pulvinar ac, mollis id diam. Praesent nec ipsum sem. Curabitur a ante sed orci lobortis faucibus eu eget mi. Pellentesque vitae nulla et arcu commodo sollicitudin. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent eget aliquet ipsum. Sed vel justo id metus accumsan elementum. Nullam suscipit auctor dolor, nec dignissim lectus ornare at. Suspendisse potenti.</p>\r\n', 'TRUE'),
-(6, 'Contact Us', 0, 'contact-us', '', '', 6, 'Afric'' Aventure | Contact Us', '<p>\r\n	Maecenas vel odio turpis. Donec sapien ante, accumsan et pulvinar ac, mollis id</p>\r\n<p>\r\n	&nbsp;</p>\r\n', 'TRUE'),
-(18, 'Destinations', 2, 'destinations', '', '', 1, '', '', 'TRUE'),
-(19, 'Themes', 2, 'themes', '', '', 2, '', '', 'TRUE'),
-(20, 'Parks Served', 3, 'parks-served', '', '', 1, '', '', 'TRUE'),
-(21, 'Themed Safaris', 3, 'themed-safaris', '', '', 2, '', '', 'TRUE'),
-(22, 'By Park', 4, 'by-park', '', '', 1, '', '', 'TRUE'),
-(23, 'By Beach', 4, 'by-beach', '', '', 2, '', '', 'TRUE'),
-(24, 'Test Page', 0, 'test-page', 'Koala.jpg', '', 0, 'Test Page Test', '<p>\r\n	<img alt="" src="/afric-aventure/ckfinder/userfiles/images/Koala.jpg" style="width: 300px; height: 225px;" />&nbsp;&nbsp;</p>\r\n', 'FALSE');
+INSERT INTO `afric_aventure_pages` (`id`, `title`, `en_title`, `parent_page`, `url`, `en_url`, `thumbnail`, `draws_from`, `priority`, `browser_title`, `text`, `en_text`, `active`) VALUES
+(1, 'Accueil', 'Home', 0, 'home', 'home', '', '', 1, 'Afric'' Aventure | Home', '', '', 'TRUE'),
+(2, 'Vacances Plage', 'Beach Vacations', 0, 'vacances-plage', 'beach-vacations', '', 'afric_aventure_beach_vacation_categories', 3, 'Afric'' Aventure | Beach Vacations', '', '', 'TRUE'),
+(3, 'Safaris', 'Safaris', 0, 'safaris', 'safaris', '', 'afric_aventure_safaris_categories', 2, 'Afric'' Aventure | Safaris', '', '', 'TRUE'),
+(4, 'Hébergement', 'Accommodations', 0, 'hebergement', 'accommodations', '', 'afric_aventure_accomodations_categories', 4, 'Afric'' Aventure | Accomodations', '', '', 'TRUE'),
+(5, 'Qui Sommes-Nous', 'About Us', 0, 'qui-sommes-nous', 'about-us', '', '', 5, 'Afric'' Aventure | About Us', '<p>\r\n	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur laoreet iaculis sollicitudin. Maecenas ut arcu felis. Morbi non justo eros. Nullam laoreet molestie tincidunt. In hac habitasse platea dictumst. Ut dapibus dui a elit acuere tortor, eu ultricies nibh arcu non quam. Nunc blandit elit id dolor feugiat varius. Aenean consequat, est et pellentesque luctus, felis nisl vulputate sem, porttitor sodales nunc leo eu nisl. Vivamus sit amet nunc eu dolor eleifend blandit eu eget tortor. In<strong>teger ante velit, sagittis ac rhoncus non, adipiscing eget nunc. Morbi molestie nulla nec ante sollicitudin id lacinia erat rhoncus. Suspendisse odio arcu, bibendum id tincidunt eget, euismod non massa.</strong></p>\r\n<p>\r\n	Maecenas vel odio turpis. Donec sapien ante, accumsan et pulvinar ac, mollis id diam. Praesent nec ipsum sem. Curabitur a ante sed orci lobortis faucibus eu eget mi. Pellentesque vitae nulla et arcu commodo sollicitudin. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent eget aliquet ipsum. Sed vel justo id metus accumsan elementum. Nullam suscipit auctor dolor, nec dignissim lectus ornare at. Suspendisse potenti.</p>\r\n', '', 'TRUE'),
+(6, 'Nous Contacter', 'Contact Us', 0, 'nous-contacter', 'contact-us', '', '', 6, 'Afric'' Aventure | Contact Us', '<p>\r\n	Maecenas vel odio turpis. Donec sapien ante, accumsan et pulvinar ac, mollis id</p>\r\n<p>\r\n	&nbsp;</p>\r\n', '', 'TRUE'),
+(20, 'Parks Served', '', 3, 'parks-served', '', '', '', 1, '', '', '', 'TRUE'),
+(21, 'Themed Safaris', '', 3, 'themed-safaris', '', '', '', 2, '', '', '', 'TRUE'),
+(22, 'By Park', '', 4, 'by-park', '', '', '', 1, '', '', '', 'TRUE'),
+(23, 'By Beach', '', 4, 'by-beach', '', '', '', 2, '', '', '', 'TRUE'),
+(24, 'Test Page', '', 0, 'test-page', '', 'Koala.jpg', '', 0, 'Test Page Test', '<p>\r\n	<img alt="" src="/afric-aventure/ckfinder/userfiles/images/Koala.jpg" style="width: 300px; height: 225px;" />&nbsp;&nbsp;</p>\r\n', '', 'FALSE');
 
 -- --------------------------------------------------------
 
@@ -413,24 +439,26 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_photo_albums` (
 CREATE TABLE IF NOT EXISTS `afric_aventure_safaris` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(150) NOT NULL,
+  `en_title` varchar(255) NOT NULL,
   `category` int(11) NOT NULL,
   `description` text NOT NULL,
   `url` varchar(200) NOT NULL,
+  `en_url` varchar(255) NOT NULL,
   `thumbnail` varchar(200) NOT NULL,
   `text` text NOT NULL,
+  `en_text` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `afric_aventure_safaris`
 --
 
-INSERT INTO `afric_aventure_safaris` (`id`, `title`, `category`, `description`, `url`, `thumbnail`, `text`) VALUES
-(1, 'Armageddon', 2, 'sjss kskskks sksk kskkhgkg ksk kj sjk kgjkjg jgkfgjk h khfghsgriirgtrig ghfkjgkgskhgjh  hekl o  dsthis is hjushtre  a teadfrty ', 'armageddon', 'Lighthouse.jpg', '<p>\r\n	Pellentesque vitae pulvinar sapien. Nullam hendrerit pellentesque est nec placerat. In porttitor tristique odio, eu placerat libero pretium ac. In at dolor vel massa rutrum porttitor vitae ac turpis. Sed tortor lectus, semper vel vestibulum ut, pharetra at mauris. Nullam ut mi leo. Suspendisse potenti. <img alt="" src="/afric-aventure/ckfinder/userfiles/images/Lighthouse.jpg" style="width: 400px; height: 300px;" />Curabitur suscipit justo sagittis nisl varius auctor placerat tortor malesuada. Praesent mollis neque in est molestie blandit. Proin interdum commodo faucibus. Nullam rutrum sem quis justo rhoncus consectetur. Vivamus aliquam nibh ac sem fermentum dignissim. Etiam ante justo, rutrum sed dictum sed, sodales ac urna. Morbi at nunc sed risus pretium feugiat ut id felis</p>\r\n'),
-(2, 'Themed Safaris ', 2, 'jss kskskks sksk kskkhgkg ksk kj sjk kgjkjg jgkfgjk h khfghsgriirgtrig ghfkjgkgskhgjh  hekl o  dsthis is hjushtre  a teadfrty ', 'themed-safaris', 'ppp.jpg', '<p>\r\n	<img alt="" src="/afric-aventure/ckfinder/userfiles/images/ppp.jpg" style="width: 100px; height: 100px; float: left;" />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vestibulum libero at magna mollis quis sodales lorem sagittis. Morbi id neque id tortor molestie fringilla. Quisque tempor elit sed erat cursus malesuada. Sed sed venenatis tortor. Morbi pretium, ligula sed rhoncus volutpat, magna libero eleifend lacus, sed aliquam nunc erat quis magna. Donec quis commodo libero. Morbi sed leo lectus, a accumsan magna. Phasellus ultrices justo non massa rhoncus ut fermentum nulla sodales. Maecenas convallis nisl sit amet massa rutrum sodales. Curabitur mollis, metus eu pharetra consequat, lorem quam consequat felis, id suscipit sapien enim nec mauris. Vivamus consectetur, augue sed dapibus aliquam, velit purus commodo lorem, eu vehicula nisl lorem ac nulla. Duis dui sem, feugiat nec convallis non, hendrerit venenatis risus. Etiam sed metus erat, eu malesuada urna.</p>\r\n'),
-(3, 'National Park 1', 1, 'Donec ac libero ipsum, ac dapibus justo. Fusce sagittis leo ut magna ornare auctor. Nullam a mi pellentesque leo elementum tristique. Etiam vitae nulla eu ipsum hendrerit molestie nec quis felis. In luctus nulla vel tortor viverra ultrices. Suspendisse potenti. Praesent tincidunt ultricies turpis vel ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur molestie imperdiet posuere. Nulla facilisi. Curabitur in suscipit ligula. Nam lacinia nibh ultrices tortor egestas interdum tempor velit facilisis.', 'national-park-1', 'Koala.jpg', '<p>\r\n	<img alt="" src="/afric-aventure/ckfinder/userfiles/images/Koala.jpg" style="width: 300px; height: 225px; float: left;" />This is test copy.</p>\r\n'),
-(4, 'National Park 2', 1, 'Donec ac libero ipsum, ac dapibus justo. llentesque leo elementum tristique. Etiam vitae nulla eu ipsum hendrerit molestie nec quis felis. In luctus nulla vel tortor viverra ultrices. Suspendisse potenti. Praesent tincidunt ultricies turpis vel ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur molestie imperdiet posuere. Nulla facilisi. Curabitur in suscipit ligula. Nam lacinia nibh ultrices tortor egestas interdum tempor velit facilisis.', 'national-park-2', 'demo2.jpg', '<p>\r\n	<img alt="" src="/afric-aventure/ckfinder/userfiles/images/demo2.jpg" style="width: 300px; height: 128px;" /></p>\r\n<p>\r\n	This is test copy</p>\r\n'),
-(5, 'National Park Test', 1, '', 'national-park-test', '', '<p>\r\n	Test park</p>\r\n');
+INSERT INTO `afric_aventure_safaris` (`id`, `title`, `en_title`, `category`, `description`, `url`, `en_url`, `thumbnail`, `text`, `en_text`) VALUES
+(1, 'Armageddon', '', 2, 'sjss kskskks sksk kskkhgkg ksk kj sjk kgjkjg jgkfgjk h khfghsgriirgtrig ghfkjgkgskhgjh  hekl o  dsthis is hjushtre  a teadfrty ', 'armageddon', '', 'Lighthouse.jpg', '<p>\r\n	Pellentesque vitae pulvinar sapien. Nullam hendrerit pellentesque est nec placerat. In porttitor tristique odio, eu placerat libero pretium ac. In at dolor vel massa rutrum porttitor vitae ac turpis. Sed tortor lectus, semper vel vestibulum ut, pharetra at mauris. Nullam ut mi leo. Suspendisse potenti. <img alt="" src="/afric-aventure/ckfinder/userfiles/images/Lighthouse.jpg" style="width: 400px; height: 300px;" />Curabitur suscipit justo sagittis nisl varius auctor placerat tortor malesuada. Praesent mollis neque in est molestie blandit. Proin interdum commodo faucibus. Nullam rutrum sem quis justo rhoncus consectetur. Vivamus aliquam nibh ac sem fermentum dignissim. Etiam ante justo, rutrum sed dictum sed, sodales ac urna. Morbi at nunc sed risus pretium feugiat ut id felis</p>\r\n', ''),
+(2, 'Themed Safaris ', '', 2, 'jss kskskks sksk kskkhgkg ksk kj sjk kgjkjg jgkfgjk h khfghsgriirgtrig ghfkjgkgskhgjh  hekl o  dsthis is hjushtre  a teadfrty ', 'themed-safaris', '', 'ppp.jpg', '<p>\r\n	<img alt="" src="/afric-aventure/ckfinder/userfiles/images/ppp.jpg" style="width: 100px; height: 100px; float: left;" />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vestibulum libero at magna mollis quis sodales lorem sagittis. Morbi id neque id tortor molestie fringilla. Quisque tempor elit sed erat cursus malesuada. Sed sed venenatis tortor. Morbi pretium, ligula sed rhoncus volutpat, magna libero eleifend lacus, sed aliquam nunc erat quis magna. Donec quis commodo libero. Morbi sed leo lectus, a accumsan magna. Phasellus ultrices justo non massa rhoncus ut fermentum nulla sodales. Maecenas convallis nisl sit amet massa rutrum sodales. Curabitur mollis, metus eu pharetra consequat, lorem quam consequat felis, id suscipit sapien enim nec mauris. Vivamus consectetur, augue sed dapibus aliquam, velit purus commodo lorem, eu vehicula nisl lorem ac nulla. Duis dui sem, feugiat nec convallis non, hendrerit venenatis risus. Etiam sed metus erat, eu malesuada urna.</p>\r\n', ''),
+(11, 'Parc National 1', 'National Parc 1', 1, '', 'parc-national-1', 'national-parc-1', '', '', ''),
+(12, 'Parc National 2', 'National Park 2', 1, '', 'parc-national-2', 'national-park-2', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -441,8 +469,10 @@ INSERT INTO `afric_aventure_safaris` (`id`, `title`, `category`, `description`, 
 CREATE TABLE IF NOT EXISTS `afric_aventure_safaris_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
+  `en_title` varchar(255) NOT NULL,
   `parent` int(11) NOT NULL,
   `url` varchar(200) NOT NULL,
+  `en_url` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
@@ -450,9 +480,9 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_safaris_categories` (
 -- Dumping data for table `afric_aventure_safaris_categories`
 --
 
-INSERT INTO `afric_aventure_safaris_categories` (`id`, `title`, `parent`, `url`) VALUES
-(1, 'Parks Served', 0, 'parks-served'),
-(2, 'Themed Safaris', 0, 'themed-safaris');
+INSERT INTO `afric_aventure_safaris_categories` (`id`, `title`, `en_title`, `parent`, `url`, `en_url`) VALUES
+(1, 'Parcs Servis', 'Parks Served', 0, 'parcs-servis', 'parks-served'),
+(2, 'Safaris Thématiques', 'Themed Safaris', 0, 'safaris-thematiques', 'themed-safaris');
 
 -- --------------------------------------------------------
 
@@ -523,7 +553,7 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_users` (
 --
 
 INSERT INTO `afric_aventure_users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '\0\0', 'administrator', '59beecdf7fc966e2f17fd8f65a4a9aeb09d4a3d4', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1360145770, 1, 'Admin', 'istrator', 'ADMIN', '0');
+(1, '\0\0', 'administrator', '59beecdf7fc966e2f17fd8f65a4a9aeb09d4a3d4', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1360289446, 1, 'Admin', 'istrator', 'ADMIN', '0');
 
 -- --------------------------------------------------------
 

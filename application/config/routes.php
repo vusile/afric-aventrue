@@ -38,16 +38,14 @@
 |
 */
 
-$route['default_controller'] = "main";
+$route['default_controller'] = "fr";
 $route['404_override'] = '';
-$route['^(?!backend|auth|action|images_examples).*'] = "main/$0";
-$route['beach-vacations'] = "main/beach";
-$route['safaris'] = "main/safari";
-$route['accomodations'] = "main/accomodation";
-$route['custom'] = "main/custom";
-$route['contact-us'] = "main/contact";
-$route['about-us'] = "main/about";
-$route['photo-albums'] = "main/photos";
+$route['^(?!backend|auth|en).*'] = "fr/$0";
+$route['accomodations'] = "en/accomodation";
+$route['custom'] = "en/custom";
+$route['contact-us'] = "en/contact";
+$route['about-us'] = "en/about";
+$route['photo-albums'] = "en/photos";
 
 
 
