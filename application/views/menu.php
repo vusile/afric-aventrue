@@ -5,6 +5,7 @@
 
         <div class="nav-collapse">
           <ul class="nav">
+         
               <?php echo $menu; ?>
            
           </ul>

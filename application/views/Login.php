@@ -18,10 +18,10 @@
  
   <div class="control-group">
     <div class="controls">
-      <button type="submit" class="btn">Log Me In</button>
+      <button type="submit" class="btn" style="margin-left: -1px; width: 265px;">Log Me In</button>
     </div>
   </div>
 </form>
-</div>
-</div>
-</div>
+</div> <!--  end of content -->
+</div>  <!-- end of right -->
+

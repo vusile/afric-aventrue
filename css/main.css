@@ -28,7 +28,7 @@ margin: 145px 0px 0px 180px;
 .slider{
   border: 1px solid #ffffff;
   width:938px;
- height: 402px;
+ height: 400px;
   margin-bottom: 10px;
 }
 .slider img{
@@ -36,7 +36,7 @@ margin: 0px;
 }
 .slidest{
   border: 1px solid #ffffff;
-  height: 402px;
+  height: 400px;
   margin-bottom: 20px;
 }
 
@@ -118,9 +118,7 @@ margin:0px;
   .news_teaser a:hover{
      color:#c88132;
   }
-  .news_teaser a:visited{
-    color:#c88132;
-  }
+ 
 .news_teaser p{
      text-align: justify;
       margin: 0px 15px 10px 15px;
@@ -167,7 +165,7 @@ margin-top: -30px;
   text-decoration: none;
 }
 #zoom a:hover{
-  color: #000000;
+  color:#c88132;
    text-decoration: underline;
    font-weight: bold;
 }
@@ -268,20 +266,37 @@ margin-left: -40px;
 #input_align p{
 
 }
-#contact_checkbox{
+#other_comments{
 width: 450px;
 height: 200px;
-margin-left: 88px;
+margin-left: 60px;
+
 }
 #captcha_wrapper img{
- margin-left: 89px;
+margin-left: 60px;
 }
 #total_days{
-  margin-left: 162px;
+margin-left: 278px;
 }
-option label{
-  color:#c88132;
+optgroup label{
+color:#c88132;
+font-weight:bold;
 }
+.groupe{
+  margin-left: 60px;
+}
+.groupa{
+  margin-left: 30px;
+}
+.social_icons{
+  border-left: 1px dotted #e5e5e5;
+  margin: 60px 0px 0px 100px;
+  height: 190px;
+}
+.social_fb{
+  margin-left: 42px;
+}
+
 /*!
  * Bootstrap v2.2.2
  * Dont delete or update them!
@@ -487,7 +502,8 @@ textarea {
 }
 body {
   margin: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+  font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
   font-size: 14px;
   line-height: 20px;
   color: #ffffff;
@@ -1458,6 +1474,7 @@ legend {
   border: 0;
   border-bottom: 1px solid #e5e5e5;
   font-weight: bold;
+  margin-left: 15px;
 }
 legend small {
   font-size: 15px;
@@ -2268,8 +2285,8 @@ legend + .control-group {
 }
 .btn {
   display: inline-block;
-margin-left: 91px;
- width: 180px;
+margin-left: 60px;
+ width: 263px;
   *display: inline;
   /* IE7 inline-block hack */
 
@@ -3866,7 +3883,7 @@ input[type="submit"].btn.btn-mini {
 }
 .navbar .nav > li > a:focus,
 .navbar .nav > li > a:hover {
-  background-color: transparent;
+  /*background-color: transparent;*/
   color: #ffffff;
   text-decoration: none;
 }

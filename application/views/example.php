@@ -35,12 +35,13 @@ a:hover
 		<a href='<?php echo site_url('logout')?>'>Logout</a> |
 		<a href='<?php echo site_url('backend/afric_aventure_pages')?>'>Pages</a> |
 		<a href='<?php echo site_url('backend/afric_aventure_slider')?>'>Home Page Slider</a> |
-		<a href='<?php echo site_url('backend/afric_aventure_beach_vacations')?>'>Beach Vacations</a> |
 		<a href='<?php echo site_url('backend/afric_aventure_safaris')?>'>Safaris</a> |
-		<a href='<?php echo site_url('backend/afric_aventure_accomodations')?>'>Accomodations</a> |
+		<a href='<?php echo site_url('backend/afric_aventure_beach_vacations')?>'>Beach Vacations</a> |
 		<a href='<?php echo site_url('backend/afric_aventure_beach_vacation_categories')?>'>Beach Vacations Categories</a> |
 		<a href='<?php echo site_url('backend/afric_aventure_safaris_categories')?>'>Safaris Category</a> |
-		<a href='<?php echo site_url('backend/afric_aventure_accomodations_categories')?>'>Accomodations Category</a>
+		<!-- <a href='<?php echo site_url('backend/afric_aventure_accomodations_categories')?>'>Accomodations Category</a> | -->
+		<a href='<?php echo site_url('backend/afric_aventure_accomodations')?>'>Accomodations</a> |
+		<!-- <a href='<?php echo site_url('backend/afric_aventure_accomodations_sliders')?>'>Accomodations Sliders</a> -->
 		
 		<!--<a href='<?php echo site_url('backend/lakeland_sections')?>'>Main Content Sections</a> |-->
 

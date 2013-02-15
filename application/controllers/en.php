@@ -17,23 +17,29 @@ class En extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
+
 	 
 
 
 	function menu()
-	{
+	{  
+		//echo $this->uri->segment(2);
+		
 		$menu = '';
 		$this->db->order_by('priority');
 		$this->db->where('parent_page', 0);
 		$this->db->where('active', 'TRUE');
 		$pages=$this->db->get('afric_aventure_pages');
-
+		
 		foreach($pages->result() as $page)
 		{
 			if($page->draws_from != '')
 			{
 		
-				$menu .= "<li class = 'dropdown'><a data-toggle='dropdown' class='dropdown-toggle' href = '" . current_url() . "'>"  . $page->en_title .  "<b class='caret'></b></a><ul class='dropdown-menu'>";
+				$menu .= "<li class = 'dropdown";
+				if($this->uri->segment(2) ==  $page->en_url)
+					$menu .= " active ";
+				$menu .= "'><a data-toggle='dropdown' class='dropdown-toggle' href = '" . current_url() . "'>"  . $page->en_title .  "<b class='caret'></b></a><ul class='dropdown-menu'>";
 			
 				$this->db->where('parent', 0);
 				$categories = $this->db->get($page->draws_from);
@@ -68,12 +74,19 @@ class En extends CI_Controller {
 			{
 				$this->db->where('parent_page', $page->id);
 				$kids = $this->db->get('afric_aventure_pages');
-				if($kids->num_rows() == 0) 
-				
-					$menu .= "<li ><a href = 'en/" . $page->en_url . "'>"  . $page->en_title .  "</a></li><li class='divider-vertical'></li>";
+				if($kids->num_rows() == 0 )
+				{
+					$menu .= "<li";
+					if($this->uri->segment(2) == $page->en_url)
+						$menu .= " class = 'active' ";
+					$menu .= "><a href = 'en/" . $page->en_url . "'>"  . $page->en_title .  "</a></li><li class='divider-vertical'></li>";
+				}
 				else
 				{
-					$menu .= "<li class = 'dropdown'><a data-toggle='dropdown' class='dropdown-toggle' href = '" . current_url() . "'>"  . $page->en_title .  "<b class='caret'></b></a><ul class='dropdown-menu'>";		
+					$menu .= "<li class = 'dropdown";
+					if($this->uri->segment(2) == $page->en_url)
+						$menu .= " active ";
+					$menu .= "'><a data-toggle='dropdown' class='dropdown-toggle' href = '" . current_url() . "'>"  . $page->en_title .  "<b class='caret'></b></a><ul class='dropdown-menu'>";		
 					foreach($kids->result() as $kid)
 					{
 						$menu .= "<li ><a href = 'en/" . $page->en_url . '/' . $kid->en_url . "'>"  . $kid->en_title .  "</a></li>";
@@ -84,6 +97,8 @@ class En extends CI_Controller {
 			}
 
 		}
+		  
+
 			return $menu;
 
 	 }
@@ -94,7 +109,6 @@ class En extends CI_Controller {
 
 	{    
 
-
 		$menu['menu'] = $this->menu();
 		$data['slider'] = $this->db->get('afric_aventure_slider');
 		$this->db->where('url', 'home');
@@ -104,7 +118,7 @@ class En extends CI_Controller {
 		$this->load->view('header',$header);  
 	    $this->load->view('menu',$menu);
 		$this->load->view('home',$data);
-		$this->load->view('footer');
+		$this->load->view('footer_en');
 	}
 	
 	public function home()
@@ -133,7 +147,7 @@ class En extends CI_Controller {
 		$this->load->view('header',$header);
 		$this->load->view('menu',$menu);
 		$this->load->view('summary',$data);
-		$this->load->view('footer');
+		$this->load->view('footer_en');
 	}
 	public function beach($url)
 	{   
@@ -148,7 +162,7 @@ class En extends CI_Controller {
 		$this->load->view('header',$header);
 		$this->load->view('menu',$menu);
 		$this->load->view('simple_summary_page',$data);
-		$this->load->view('footer');
+		$this->load->view('footer_en');
 	}
 	
 	public function safaris($url)
@@ -168,21 +182,30 @@ class En extends CI_Controller {
 		$this->load->view('header',$header);
 		$this->load->view('menu',$menu);
 		$this->load->view('summary',$data);
-		$this->load->view('footer');
+		$this->load->view('footer_en');
 	}
 	public function safari($url)
 	{
-		$this->db->where('url', $url);
+		$this->db->where('en_url', $url);
 		$query = $this->db->get('afric_aventure_safaris');
 		$data['title'] = $query->row()->en_title;
 		$header['title']=$query->row()->en_title;
 		$data['text'] = $query->row()->en_text;
 		$header['fr']='safari/' . $query->row()->url;
+
+		if($query->row()->accomodation_park != 0)
+		{
+			$this->db->where('id',$query->row()->accomodation_park);
+			$accomodation=$this->db->get('afric_aventure_accomodations_categories');
+			$data['accomodations'] = "<a href = '" . base_url() . 'en/accommodations/by-park/' . $accomodation->row()->en_url . "' style='margin-left: 15px'>" .  $query->row()->en_title  . " Accommodations</a>";
+		}
+
+
 		$menu['menu'] = $this->menu();
 		$this->load->view('header',$header);
 		$this->load->view('menu',$menu);
 		$this->load->view('simple_summary_page',$data);
-		$this->load->view('footer');
+		$this->load->view('footer_en');
 	}
 	public function accommodations($url,$accomodation_url)
 	{
@@ -228,7 +251,7 @@ class En extends CI_Controller {
 			$this->load->view('accomodation_summary_page',$data);
 		else
 			$this->load->view('accomodation_summary_page');
-		$this->load->view('footer');
+		$this->load->view('footer_en');
 	}
 
 	
@@ -242,10 +265,10 @@ class En extends CI_Controller {
 		$data['content'] = $query->row()->en_text;
 		$header['fr']=$query->row()->url;
 		$menu['menu'] = $this->menu();
-		$this->load->view('header',$header);
+  		$this->load->view('header',$header);
 		$this->load->view('menu',$menu);
 		$this->load->view('simple_summary_page',$data);
-		$this->load->view('footer');
+		$this->load->view('footer_en');
 
 	}
 	
@@ -305,7 +328,24 @@ class En extends CI_Controller {
 		$this->load->view('header',$header);
 		$this->load->view('menu',$menu);
 		$this->load->view('contact',$data);
-		$this->load->view('footer');
+		$this->load->view('footer_en');
+	}
+
+	public function page($url){
+
+        $this->db->where('en_url',$url);
+		$query= $this->db->get('afric_aventure_pages');
+		$data['title'] = $query->row()->en_title;
+		$header['title']=$query->row()->en_title;
+		$data['content'] = $query->row()->en_text;
+		$header['fr']= 'page/' . $query->row()->url;
+		$menu['menu'] = $this->menu();
+  		$this->load->view('header',$header);
+		$this->load->view('menu',$menu);
+		$this->load->view('simple_summary_page',$data);
+		$this->load->view('footer_en');
+
+	
 	}
 	
 	
@@ -316,11 +356,12 @@ class En extends CI_Controller {
 		$menu['crumbs'] = '<li><a href = "home">Home</a></li><li><a href="#" class="active">Login</a></li>';
 		//$sidebar['trips'] = $this->sidebar();
 		$header['title'] = 'Login';
+		$header['fr'] = 'login';
 		$this->load->view('header',$header);
 		$this->load->view('menu',$menu);
 		//$this->load->view('sidebar',$sidebar);
 		$this->load->view('Login');
-		$this->load->view('footer');
+		$this->load->view('footer_en');
 	}
 	
 	function login_user()
@@ -400,17 +441,29 @@ class En extends CI_Controller {
 		
 	}
 	
-	function send_message($form=1)
+	function send_message()
 	{
 		if(isset($_POST))
 		{
 			$this->load->library('form_validation');
-			$this->form_validation->set_rules('firstname', 'First Name', 'required');
-			$this->form_validation->set_rules('surname', 'Surname', 'required');
-			$this->form_validation->set_rules('nationality', 'Nationality', 'required');
-			$this->form_validation->set_rules('phone', 'Phone');
-			$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-			$this->form_validation->set_rules('subject', 'Subject', 'required');
+			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
+			$this->form_validation->set_rules('surname', 'Surname', 'trim|required');
+			$this->form_validation->set_rules('nationality', 'Nationality','trim');
+			$this->form_validation->set_rules('email_address', 'Email', 'required|valid_email');
+			$this->form_validation->set_rules('email_confirmation', 'Email', 'required|matches[email]');
+			$this->form_validation->set_rules('telephone', 'Telephone','trim|required');
+			$this->form_validation->set_rules('skype', 'Skype','trim');
+			$this->form_validation->set_rules('days_for_parks', 'Parks', 'trim|required');
+		
+			$this->form_validation->set_rules('days_for_beaches', 'Beaches', 'trim|required');
+				$this->form_validation->set_rules('no_of_children', 'No. of Children','trim');
+			$this->form_validation->set_rules('no_of_adults', 'No. of Adults', 'trim|required');
+			$this->form_validation->set_rules('no_of_rooms', 'No. of Rooms', 'trim|required');
+			$this->form_validation->set_rules('initial_budget', 'From', 'trim|required');
+			$this->form_validation->set_rules('final_budget', 'To', 'trim|required');
+			$this->form_validation->set_rules('no_of_travels_to_afrika', 'No of Trips to Africa','trim');
+			$this->form_validation->set_rules('i_reach_the_website_through', 'How you reach our website','trim');
+			$this->form_validation->set_rules('other_comments', 'Comments','trim');
 			$this->form_validation->set_rules('captcha', 'The Captcha', 'required|callback_validate_captcha');
 			
 			$this->form_validation->set_error_delimiters('<p style = "color: red; font-weight: bold;">','</p>');
@@ -424,10 +477,10 @@ class En extends CI_Controller {
 				$this->load->library('email');
 				
 				$config['protocol'] = 'smtp';
-				$config['smtp_host'] = 'mail.afric_aventureafrica.com';
-				$config['smtp_user'] = 'reservations@afric_aventureafrica.com';
-				$config['smtp_pass'] = '1919wisiko';
-				$config['smtp_port'] = '25';
+				$config['smtp_host'] = 'smtp.gmail.com';
+				$config['smtp_user'] = 'danielmanji@gmail.com';
+				$config['smtp_pass'] = 'daniel@chikaka.com';
+				$config['smtp_port'] = '465';
 				$config['mailtype'] = 'html';
 				$config['wordwrap'] = TRUE;
 				$config['charset']='utf-8';  
@@ -438,16 +491,16 @@ class En extends CI_Controller {
 				$this->email->from('reservations@afric_aventureafrica.com', 'afric_aventure Africa');
 				$this->email->bcc('terence@zoomtanzania.com'); 
 				
-				$this->email->to('reservations@afric_aventureafrica.com'); 
+				$this->email->to('danielmanji@gmail.com'); 
 				
 
 				
-				$this->email->subject($_POST['subject']);
+				$this->email->subject('New Message from Afric\'Aventure  Website');
 				$message = '<html><head></head><body>';
 
 				foreach($_POST as $key=>$value)
 				{
-					if($key == 'subject' or $key == 'captcha' or $key == 'confirm_email')
+					if($key == 'subject' or $key == 'captcha' or $key == 'email_confirmation')
 						$message .= "";
 					else
 					{
@@ -458,23 +511,22 @@ class En extends CI_Controller {
 
 
 				$message .= '</body></html>';	
-				$this->email->message($message);	
-				$this->email->set_alt_message($message);
+				echo $message;
+				// $this->email->message($message);	
+				// $this->email->set_alt_message($message);
 
-				if($this->email->send())
-				{
+				// if($this->email->send())
+				// {
 
-					$header['title'] = 'Message Sent';
+				// 	$header['title'] = 'Message Sent';
 
-					$menu['menu'] = $this->menu();
-					$menu['crumbs'] = '<li><a href = "home">Home</a></li><li><a href="#" class="active">Message Sent</a></li>';
-					$sidebar['trips'] = $this->sidebar();
-					$data['details']->title = "Message Sent";
-					$data['details']->content = "<p>Your Message has been sent to us, please give us a while to respond.</p>";
-					$this->load->view('header',$header);
-					$this->load->view('contact',$data);
-					$this->load->view('footer');
-				}
+				// 	$menu['menu'] = $this->menu();
+				// 	$data['title']->title = "Message Sent";
+				// 	$data['details']->content = "<p>Your Message has been sent to us, please give us a while to respond.</p>";
+				// 	$this->load->view('header',$header);
+				// 	$this->load->view('contact',$data);
+				// 	$this->load->view('footer_en');
+				// }
 			
 
 			}
@@ -490,18 +542,11 @@ class En extends CI_Controller {
 	function xml_sitemap()
 	{
 		$this->load->helper('file');
-		$this->db->where('draws_from', 0);
 		$this->db->where('parent_page', 0);
 		$pages = $this->db->get('afric_aventure_pages');
 
-
-
-		
 		$xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-		
-		
-
-
+	
 
 		$xml .= '<url><loc>' . base_url() . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
 
@@ -518,6 +563,7 @@ class En extends CI_Controller {
 					foreach ($subs->result() as $sub) {
 						
 						$xml .= '<url><loc>' . base_url()  . $page->url . '/' . $sub->url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>.7</priority></url>';
+						$xml .= '<url><loc>' . base_url()  . $page->en_url . '/' . $sub->en_url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>.7</priority></url>';
 					}
 				}
 
@@ -527,55 +573,77 @@ class En extends CI_Controller {
 			}
 		}
 
-		$this->db->where('type', 1);
-		$this->db->where('safari_type <>', 0);
-		$cats=$this->db->get('afric_aventure_page_categories');
+	$cats=$this->db->get('afric_aventure_safaris_categories');
 
 		foreach($cats->result() as $cat)
 		{
 
-			if($cat->url =='custom-packages' or $cat->url =='scheduled-trips')
+		
+				$xml .= '<url><loc>' . base_url()  . 'en/safaris/' . $cat->en_url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
 				$xml .= '<url><loc>' . base_url()  . 'safaris/' . $cat->url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
-			else
-			{
-				$this->db->where('safari_type', $cat->safari_type);
-
-				if($cat->parent_category==3)
-					$this->db->where('type', $cat->id);		
-
-				$safaris=$this->db->get('afric_aventure_safaris');
-
-				if($safaris->num_rows()>0)
-				{
-					foreach($safaris->result() as $safari)
-					{
-						$xml .= '<url><loc>' . base_url()  . 'trip/' . $safari->url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
-					}
-				}
-
-			}
-		}
-
-		$this->db->where('type', 2);
-		$cats=$this->db->get('afric_aventure_page_categories');
-
-		foreach($cats->result() as $cat)
-		{
-
-
-			$this->db->where('destination_type', $cat->id);
-			$destinations=$this->db->get('afric_aventure_destinations');
-
-			if($destinations->num_rows()>0)
-			{
-				foreach($destinations->result() as $destination)
-				{
-					$xml .= '<url><loc>' . base_url()  . 'destination/' . $destination->url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
-				}
-			}
-
 			
 		}
+		$cats=$this->db->get('afric_aventure_beach_vacation_categories');
+
+		foreach($cats->result() as $cat)
+		{
+
+		
+				$xml .= '<url><loc>' . base_url()  . 'en/beach-vacations/' . $cat->en_url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
+				$xml .= '<url><loc>' . base_url()  . 'vacances_plage/' . $cat->url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
+			
+		}
+
+
+		$this->db->where('category',1);
+		$kats=$this->db->get('afric_aventure_beach_vacations');
+
+		foreach($kats->result() as $kat)
+		{
+          
+						
+						$xml .= '<url><loc>' . base_url()  . 'en/beach-vacations/beach-vacation-destinations'. '/' . $kat->en_title . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>.7</priority></url>';
+						$xml .= '<url><loc>' . base_url()  . 'vacances-plage/destinations-de-vacances-de-plage'. '/' . $kat->en_title . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>.7</priority></url>';
+	  	}
+
+
+		$this->db->where('category',2);
+		$kats=$this->db->get('afric_aventure_beach_vacations');
+
+		foreach($kats->result() as $kat)
+		{
+          
+						
+						$xml .= '<url><loc>' . base_url()  . 'en/beach-vacations/beach-vacation-themes'. '/' . $kat->en_title . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>.7</priority></url>';
+						$xml .= '<url><loc>' . base_url()  . 'vacances-plage/themes-de-vacances-plage'. '/' . $kat->title . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>.7</priority></url>';
+	  	}
+	
+	
+				
+		
+       $this->db->where('parent', 1);
+		$cats=$this->db->get('afric_aventure_accomodations_categories');
+
+		foreach($cats->result() as $cat)
+		{
+
+
+			$xml .= '<url><loc>' . base_url()  . 'en/accommodations/by-park/' . $cat->en_url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
+			$xml .= '<url><loc>' . base_url()  . 'hebergement/de-la-parc/' . $cat->url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
+				
+			
+		}
+
+		$this->db->where('parent', 2);
+        $cats=$this->db->get('afric_aventure_accomodations_categories');
+		foreach($cats->result() as $kat)
+		{
+
+			$xml .= '<url><loc>' . base_url()  . 'en/accommodations/by-beach/' . $kat->en_url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
+			$xml .= '<url><loc>' . base_url()  . 'hebergement/de-la-plage/' . $kat->url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
+
+		}
+
 
 		$xml .= '</urlset>';
 		
@@ -586,7 +654,7 @@ class En extends CI_Controller {
 		else
 		{
 			echo 'xml Sitemap was updated';
-			$this->pingGoogleSitemaps('http://www.afric_aventureafrica.com/sitemap.xml');
+			//$this->pingGoogleSitemaps('http://www.afric_aventureafrica.com/sitemap.xml');
 		}
 	}
 	

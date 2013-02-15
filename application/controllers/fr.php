@@ -32,7 +32,11 @@ class Fr extends CI_Controller {
 			if($page->draws_from != '')
 			{
 		
-				$menu .= "<li class = 'dropdown'><a data-toggle='dropdown' class='dropdown-toggle' href = '" . current_url() . "'>"  . $page->title .  "<b class='caret'></b></a><ul class='dropdown-menu'>";
+				$menu .= "<li class = 'dropdown";
+				if($this->uri->segment(1) ==  $page->url)
+					$menu .= " active ";
+
+				$menu .="'><a data-toggle='dropdown' class='dropdown-toggle' href = '" . current_url() . "'>"  . $page->title .  "<b class='caret'></b></a><ul class='dropdown-menu'>";
 			
 				$this->db->where('parent', 0);
 				$categories = $this->db->get($page->draws_from);
@@ -68,11 +72,19 @@ class Fr extends CI_Controller {
 				$this->db->where('parent_page', $page->id);
 				$kids = $this->db->get('afric_aventure_pages');
 				if($kids->num_rows() == 0) 
-				
-					$menu .= "<li ><a href = '" . $page->url . "'>"  . $page->title .  "</a></li><li class='divider-vertical'></li>";
+				{
+
+					$menu .= "<li";
+					if($this->uri->segment(1) == $page->url)
+						$menu .= " class = 'active' ";
+					$menu .="><a href = '" . $page->url . "'>"  . $page->title .  "</a></li><li class='divider-vertical'></li>";
+				}
 				else
 				{
-					$menu .= "<li class = 'dropdown'><a data-toggle='dropdown' class='dropdown-toggle' href = '" . current_url() . "'>"  . $page->title .  "<b class='caret'></b></a><ul class='dropdown-menu'>";		
+					$menu .= "<li class = 'dropdown";
+					if($this->uri->segment(1) == $page->url)
+						$menu .= " active ";
+					$menu .="'><a data-toggle='dropdown' class='dropdown-toggle' href = '" . current_url() . "'>"  . $page->title .  "<b class='caret'></b></a><ul class='dropdown-menu'>";		
 					foreach($kids->result() as $kid)
 					{
 						$menu .= "<li ><a href = '" . $page->url . '/' . $kid->url . "'>"  . $kid->title .  "</a></li>";
@@ -181,6 +193,15 @@ class Fr extends CI_Controller {
 		$header['title']=$query->row()->title;
 		$data['text'] = $query->row()->text;
 		$header['en']='safari/' . $query->row()->en_url;
+
+		if($query->row()->accomodation_park != 0)
+		{
+			$this->db->where('id',$query->row()->accomodation_park);
+			$accomodation=$this->db->get('afric_aventure_accomodations_categories');
+			$data['accomodations'] = "<a href = '" . base_url() . 'hebergement/de-la-parc/' . $accomodation->row()->url . "' style='margin-left: 15px'>" .  $query->row()->title  . " Hebergements</a>";
+		}
+
+
 		$menu['menu'] = $this->menu();
 		$this->load->view('header',$header);
 		$this->load->view('menu',$menu);
@@ -234,18 +255,6 @@ class Fr extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	// public function accomodation($url)
-	// {
-	// 	$this->db->where('url', $url);
-	// 	$query = $this->db->get('afric_aventure_accomodations');
-	// 	$data['details'] = $query->row();
-	// 	$menu['menu'] = $this->menu();
-	// 	$this->load->view('header');
-	// 	$this->load->view('menu',$menu);
-	// 	$this->load->view('simple_summary_page',$data);
-	// 	$this->load->view('footer');
-	// }
-	
 	
 	public function qui_sommes_nous()
 	{		
@@ -323,10 +332,27 @@ class Fr extends CI_Controller {
 		$menu['menu'] = $this->menu();
 		$this->load->view('header',$header);
 		$this->load->view('menu',$menu);
-		$this->load->view('contact',$data);
+		$this->load->view('contact-fr',$data);
 		$this->load->view('footer');
 	}
 	
+
+	public function page($url){
+
+        $this->db->where('url',$url);
+		$query= $this->db->get('afric_aventure_pages');
+		$data['title'] = $query->row()->title;
+		$header['title']=$query->row()->title;
+		$data['content'] = $query->row()->text;
+		$header['en']= 'page/'. $query->row()->en_url;
+		$menu['menu'] = $this->menu();
+  		$this->load->view('header',$header);
+		$this->load->view('menu',$menu);
+		$this->load->view('simple_summary_page',$data);
+		$this->load->view('footer');
+
+	
+	}
 	
 	public function login()
 	{
@@ -335,6 +361,7 @@ class Fr extends CI_Controller {
 		$menu['crumbs'] = '<li><a href = "home">Home</a></li><li><a href="#" class="active">Login</a></li>';
 		//$sidebar['trips'] = $this->sidebar();
 		$header['title'] = 'Login';
+		$header['en'] = 'login';
 		$this->load->view('header',$header);
 		$this->load->view('menu',$menu);
 		//$this->load->view('sidebar',$sidebar);
@@ -424,15 +451,27 @@ class Fr extends CI_Controller {
 		if(isset($_POST))
 		{
 			$this->load->library('form_validation');
-			$this->form_validation->set_rules('firstname', 'First Name', 'required');
-			$this->form_validation->set_rules('surname', 'Surname', 'required');
-			$this->form_validation->set_rules('nationality', 'Nationality', 'required');
-			$this->form_validation->set_rules('phone', 'Phone');
-			$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-			$this->form_validation->set_rules('subject', 'Subject', 'required');
+			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
+			$this->form_validation->set_rules('surname', 'Surname', 'trim|required');
+			$this->form_validation->set_rules('nationality', 'Nationality','trim');
+			$this->form_validation->set_rules('email_address', 'Email', 'required|valid_email');
+			$this->form_validation->set_rules('email_confirmation', 'Email', 'required|matches[email_address]');
+			$this->form_validation->set_rules('telephone', 'Telephone','trim|required');
+			$this->form_validation->set_rules('skype', 'Skype','trim');
+			$this->form_validation->set_rules('days_for_parks', 'Parks', 'trim|required');
+			$this->form_validation->set_rules('days_for_beaches', 'Beaches', 'trim|required');
+			$this->form_validation->set_rules('no_of_children', 'No. of Children','trim');
+			$this->form_validation->set_rules('no_of_adults', 'No. of Adults', 'trim|required');
+			$this->form_validation->set_rules('no_of_rooms', 'No. of Rooms', 'trim|required');
+			$this->form_validation->set_rules('initial_budget', 'From', 'trim|required');
+			$this->form_validation->set_rules('final_budget', 'To', 'trim|required');
+			$this->form_validation->set_rules('no_of_travels_to_afrika', 'No of Trips to Africa','trim');
+			$this->form_validation->set_rules('i_reach_the_website_through', 'How you reach our website','trim');
+			$this->form_validation->set_rules('other_comments', 'Comments','trim');
 			$this->form_validation->set_rules('captcha', 'The Captcha', 'required|callback_validate_captcha');
-			
 			$this->form_validation->set_error_delimiters('<p style = "color: red; font-weight: bold;">','</p>');
+
+		
 			
 			if ($this->form_validation->run() == TRUE)
 			{	
@@ -461,182 +500,68 @@ class Fr extends CI_Controller {
 				
 
 				
-				$this->email->subject($_POST['subject']);
+				$this->email->subject('Enquery');
 				$message = '<html><head></head><body>';
+
+				
 
 				foreach($_POST as $key=>$value)
 				{
-					if($key == 'subject' or $key == 'captcha' or $key == 'confirm_email')
-						$message .= "";
+
+					if(is_array($value))
+					{
+						$message .= '<strong>' . ucwords(str_replace("_", " ", $key)) .'</strong>:<br> ';
+
+						foreach($value as $option)
+						{
+							$message .= $option . '<br>';
+						}
+					}
 					else
 					{
-						if($value != '')
-							$message .= '<strong>' . ucwords(str_replace("_", " ", $key)) .'</strong>: '. $value . '<br>';
-					}
-				}
-
-
-				$message .= '</body></html>';	
-				$this->email->message($message);	
-				$this->email->set_alt_message($message);
-
-				if($this->email->send())
-				{
-
-					$header['title'] = 'Message Sent';
-
-					$menu['menu'] = $this->menu();
-					$menu['crumbs'] = '<li><a href = "home">Home</a></li><li><a href="#" class="active">Message Sent</a></li>';
-					$sidebar['trips'] = $this->sidebar();
-					$data['details']->title = "Message Sent";
-					$data['details']->content = "<p>Your Message has been sent to us, please give us a while to respond.</p>";
-					$this->load->view('header',$header);
-					$this->load->view('contact',$data);
-					$this->load->view('footer');
-				}
-			
-
-			}
-			
-		
-		}
-	
-	}
-	
-	
-	
-	
-	function xml_sitemap()
-	{
-		$this->load->helper('file');
-		$this->db->where('draws_from', 0);
-		$this->db->where('parent_page', 0);
-		$pages = $this->db->get('afric_aventure_pages');
-
-
-
-		
-		$xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-		
-		
-
-
-
-		$xml .= '<url><loc>' . base_url() . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
-
-		foreach ($pages->result() as $page) {
-			if($page->url == 'home')
-				$xml .= '';
-			else
-			{	
-
-				$this->db->where('parent_page',$page->id);
-				$subs=$this->db->get('afric_aventure_pages');
-				if($subs->num_rows() > 0)
-				{
-					foreach ($subs->result() as $sub) {
+						if($key == 'subject' or $key == 'captcha' or $key == 'email_confirmation')
+							$message .= "";
+						else
+						{
+							if($value != '')
 						
-						$xml .= '<url><loc>' . base_url()  . $page->url . '/' . $sub->url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>.7</priority></url>';
+								$message .= '<strong>' . ucwords(str_replace("_", " ", $key)) .'</strong>: '. $value . '<br>';
+								
+						}
 					}
 				}
 
-				else
 
-				$xml .= '<url><loc>' . base_url()  . $page->url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>.7</priority></url>';
-			}
-		}
+				$message .= '</body></html>';
+				echo $message;	
+				// $this->email->message($message);	
+				// $this->email->set_alt_message($message);
 
-		$this->db->where('type', 1);
-		$this->db->where('safari_type <>', 0);
-		$cats=$this->db->get('afric_aventure_page_categories');
+				// if($this->email->send())
+				// {
 
-		foreach($cats->result() as $cat)
-		{
+				// 	$header['title'] = 'Message Sent';
 
-			if($cat->url =='custom-packages' or $cat->url =='scheduled-trips')
-				$xml .= '<url><loc>' . base_url()  . 'safaris/' . $cat->url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
-			else
-			{
-				$this->db->where('safari_type', $cat->safari_type);
-
-				if($cat->parent_category==3)
-					$this->db->where('type', $cat->id);		
-
-				$safaris=$this->db->get('afric_aventure_safaris');
-
-				if($safaris->num_rows()>0)
-				{
-					foreach($safaris->result() as $safari)
-					{
-						$xml .= '<url><loc>' . base_url()  . 'trip/' . $safari->url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
-					}
-				}
-
-			}
-		}
-
-		$this->db->where('type', 2);
-		$cats=$this->db->get('afric_aventure_page_categories');
-
-		foreach($cats->result() as $cat)
-		{
-
-
-			$this->db->where('destination_type', $cat->id);
-			$destinations=$this->db->get('afric_aventure_destinations');
-
-			if($destinations->num_rows()>0)
-			{
-				foreach($destinations->result() as $destination)
-				{
-					$xml .= '<url><loc>' . base_url()  . 'destination/' . $destination->url . '</loc><lastmod>' . date('Y-m-d') . '</lastmod><changefreq>monthly</changefreq><priority>1</priority></url>';
-				}
-			}
-
+				// 	$menu['menu'] = $this->menu();
+				// 	$menu['crumbs'] = '<li><a href = "home">Home</a></li><li><a href="#" class="active">Message Sent</a></li>';
+				// 	$sidebar['trips'] = $this->sidebar();
+				// 	$data['details']->title = "Message Sent";
+				// 	$data['details']->content = "<p>Your Message has been sent to us, please give us a while to respond.</p>";
+				// 	$this->load->view('header',$header);
+				// 	$this->load->view('contact',$data);
+				// 	$this->load->view('footer');
+				// }
 			
-		}
 
-		$xml .= '</urlset>';
+			}
+			else $this->nous_contacter();
 		
-		if ( ! write_file('sitemap.xml', $xml))
-		{
-			 echo 'Unable to write the xml file';
 		}
-		else
-		{
-			echo 'xml Sitemap was updated';
-			$this->pingGoogleSitemaps('http://www.afric_aventureafrica.com/sitemap.xml');
-		}
+	
 	}
 	
-	function pingGoogleSitemaps( $url_xml )
-	{
-	   $status = 0;
-	   $google = 'www.google.com';
-	   if( $fp=@fsockopen($google, 80) )
-	   {
-		  $req =  'GET /webmasters/sitemaps/ping?sitemap=' .
-				  urlencode( $url_xml ) . " HTTP/1.1\r\n" .
-				  "Host: $google\r\n" .
-				  "User-Agent: Mozilla/5.0 (compatible; " .
-				  PHP_OS . ") PHP/" . PHP_VERSION . "\r\n" .
-				  "Connection: Close\r\n\r\n";
-		  fwrite( $fp, $req );
-		  while( !feof($fp) )
-		  {
-			 if( @preg_match('~^HTTP/\d\.\d (\d+)~i', fgets($fp, 128), $m) )
-			 {
-				$status = intval( $m[1] );
-				break;
-			 }
-		  }
-		  fclose( $fp );
-	   }
-	   //return( $status );
-	   echo $status;
-	}
 	
-
+	
 	
 	
 }

@@ -5,6 +5,7 @@
           
       <?php if(isset($content)) echo $content ?>
       <?php if(isset($text)) echo $text ?>
+      <?php if(isset($accomodations) ) echo $accomodations ?>
 
         
                   </div> <!-- end of fhull width		 -->

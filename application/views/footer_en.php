@@ -5,7 +5,7 @@
            <div class="span12" id="footer">
              <hr>
 				<p id="zoom">
-				 Site créé par  <a href="http://www.zoomtanzania.com/Zoom-Tanzania-Web-Design" target="_blank">Zoom Tanzania Website Design</a> 
+				 Website Created by  <a href="http://www.zoomtanzania.com/Zoom-Tanzania-Web-Design" target="_blank">Zoom Tanzania Website Design</a> 
 
 
 				</p>
@@ -14,9 +14,9 @@
 				</p>
       <div id="futa">
 				<ul >
-						<li><a href="qui_sommes_nous">Qui Sommes-Nous</a></li>
-					<li><a href="nous_contacter">Nous Contacter</a></li>
-						<li><a href="sitemap.xml">Plan du site</a></li>
+						<li><a href="en/about_us">About Us</a></li>
+					<li><a href="en/contact_us">Contact Us</a></li>
+						<li><a href="sitemap.xml">Sitemap</a></li>
 					</ul>
 
         </div>

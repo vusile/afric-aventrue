@@ -80,11 +80,10 @@ class Backend extends CI_Controller {
 	function afric_aventure_pages()
 	{
 		try {
-		//$this->grocery_crud->unset_delete();
-		// $this->grocery_crud->set_relation('parent_page','afric_aventure_pages','title');
+
 		$this->grocery_crud->set_relation('parent_page','afric_aventure_pages','title');
-		//$this->grocery_crud->unset_fields('thumbnail','url','draws_from');
-		//$this->grocery_crud->unset_columns('url','draws_from');
+		$this->grocery_crud->unset_fields('site_url','site_en_url','url','en_url','draws_from','priority','thumbnail');
+		$this->grocery_crud->unset_columns('url','en_url','draws_from','priority');
 		$this->grocery_crud->callback_after_insert(array($this, 'generate_thumb'));
 		$this->grocery_crud->callback_after_update(array($this, 'generate_thumb'));
 		$output = $this->grocery_crud->render();
@@ -129,31 +128,82 @@ class Backend extends CI_Controller {
 			}
 		}
 
+
+		if($this->uri->segment(2)=='afric_aventure_safaris')
+		{
+			if($post_array['category']==1)
+			{
+
+
+				$this->db->where('id',$primary_key);
+				$safari=$this->db->get('afric_aventure_safaris');
+				if($safari->row()->accomodation_park == 0)
+				{
+					$datas = array(
+						'title'=>$post_array['title'],
+						'en_title'=>$post_array['en_title'],
+						'parent'=>2
+					);
+					
+					$this->db->insert('afric_aventure_accomodations_categories', $datas);
+					$id = $this->db->insert_id();
+					$datas = array();
+					$data['accomodation_park'] = $id;
+
+					$datas['url']=$this->make_url_from_title($post_array['title'],'afric_aventure_accomodations_categories',$id);
+					$datas['en_url']=$this->make_url_from_title($post_array['en_title'],'afric_aventure_accomodations_categories',$id,1);
+					$this->db->where('id', $id);
+					$this->db->update('afric_aventure_accomodations_categories', $datas);
+				}
+			}
+
+		}
+
+
+		if($this->uri->segment(2)=='afric_aventure_beach_vacations')
+		{
+			if($post_array['category']==1)
+			{
+				$this->db->where('id',$primary_key);
+				$beach=$this->db->get('afric_aventure_beach_vacations');
+				if($beach->row()->accomodation_beach == 0)
+				{
+
+					$datas = array(
+						'title'=>$post_array['title'],
+						'en_title'=>$post_array['en_title'],
+						'parent'=>2
+					);
+					
+					$this->db->insert('afric_aventure_accomodations_categories', $datas);
+					$id = $this->db->insert_id();
+					$data['accomodation_beach'] = $id;
+					$datas['url']=$this->make_url_from_title($post_array['title'],'afric_aventure_accomodations_categories',$id);
+					$datas['en_url']=$this->make_url_from_title($post_array['en_title'],'afric_aventure_accomodations_categories',$id,1);
+					$this->db->where('id', $id);
+					$this->db->update('afric_aventure_accomodations_categories', $datas);
+				}
+			}
+		}
+
+
 		$data['url'] = $this->make_url_from_title($post_array['title'],$this->uri->segment(2),$primary_key);
 		$data['en_url'] = $this->make_url_from_title($post_array['en_title'],$this->uri->segment(2),$primary_key,1);
 		
+		if($this->uri->segment(2)=='afric_aventure_pages')
+		{
+			if($post_array['active'] == "FALSE")
+			{
+				$data['site_url'] = base_url() . 'page/' . $data['url'];
+				$data['site_en_url'] = base_url() . 'en/page/' . $data['en_url'];
+			}
+		}
 		
 		$this->db->where('id',$primary_key);
 		$this->db->update($this->uri->segment(2),$data);
 		
 	}
 
-	// function afric_aventure_page_categories($type) {
-
-	// 	if($type==1)
-	// 		$this->grocery_crud->set_subject('Group Overland Safaris Sub Page');
-	// 	else
-	// 		$this->grocery_crud->set_subject('Destination Sub Page');
-
-	// 	$this->grocery_crud->where('afric_aventure_page_categories.type',$type);
-	// 	$this->grocery_crud->set_relation('parent_category', 'afric_aventure_page_categories', 'title', array('parent_category'=>0));
-	// 	$this->grocery_crud->unset_fields('url','type','template','safari_type');
-	// 	$this->grocery_crud->unset_columns('url','type','template','safari_type');
-	// 	$this->grocery_crud->callback_after_insert(array($this, 'categories_callback'));
-	// 	$this->grocery_crud->callback_after_update(array($this, 'categories_callback'));
-	// 	$output = $this->grocery_crud->render();
-	// 	$this->_example_output($output);
-	// }
 	
 	function afric_aventure_slider()
 	{
@@ -175,7 +225,7 @@ class Backend extends CI_Controller {
         $crud->set_relation('category','afric_aventure_beach_vacation_categories','title');
         $crud->columns('title' ,'en_title','category','text' ,'en_text');
         $crud->fields('title' ,'en_title','category','text' ,'en_text');
-        $crud->callback_before_insert(array($this,'insert_beach_vacation'));
+        //$crud->callback_before_insert(array($this,'insert_beach_vacation'));
         $crud->callback_after_insert(array($this, 'generate_thumb'));
 		$crud->callback_after_update(array($this, 'generate_thumb'));
         $output = $crud->render();
@@ -253,7 +303,7 @@ class Backend extends CI_Controller {
         $crud->set_relation('category','afric_aventure_safaris_categories','title');
         $crud->columns('title' ,'en_title','category','text' ,'en_text');
         $crud->fields('title' ,'en_title','category','text' ,'en_text');
-        $crud->callback_before_insert(array($this,'insert_safari_vacation'));
+       // $crud->callback_before_insert(array($this,'insert_safari_vacation'));
         $crud->callback_after_insert(array($this, 'generate_thumb'));
 		$crud->callback_after_update(array($this, 'generate_thumb'));
         $output = $crud->render();
@@ -275,6 +325,8 @@ class Backend extends CI_Controller {
 			$this->db->insert('afric_aventure_accomodations_categories', $data);
 			$id = $this->db->insert_id();
 
+			$post_array['accomodation_park'] = $id;
+
 			$data['url']=$this->make_url_from_title($post_array['title'],'afric_aventure_accomodations_categories',$id);
 			$data['en_url']=$this->make_url_from_title($post_array['en_title'],'afric_aventure_accomodations_categories',$id,1);
 			$this->db->where('id', $id);
@@ -288,8 +340,44 @@ class Backend extends CI_Controller {
 	{
 		$crud = new grocery_CRUD();
  
-        
+        $crud->display_as('category','Beach or Park');
         $crud->set_relation('category','afric_aventure_accomodations_categories','title',array("parent >" => 0));
+        $crud->callback_after_insert(array($this,'accomodations_callback'));
+        $crud->callback_after_update(array($this,'accomodations_callback'));
+        $crud->unset_fields('images');
+
+        $output = $crud->render();
+
+        $this->_example_output($output);       
+	}	
+
+	function accomodations_callback($post_array,$primary_key)
+	{
+		$data['images'] = '<a href = "' . base_url() . 'backend/afric_aventure_accomodations_sliders/' . $primary_key . '">Images</a>';
+		$this->db->where('id',$primary_key);
+		$this->db->update("afric_aventure_accomodations",$data);
+	}
+
+	
+	function afric_aventure_accomodations_sliders($accomodation)
+	{
+
+		$this->db->where('id',$accomodation);
+		$accomodations=$this->db->get('afric_aventure_accomodations');
+		$accomodation_title = $accomodations->row()->title;
+
+
+
+		$crud = new grocery_CRUD();
+		$crud->set_subject($accomodation_title . ' Images');
+ 
+
+
+        $crud->where('accomodation_id',$accomodation);
+        $crud->set_field_upload('slide_pic');
+        $crud->unset_columns('accomodation_id');
+        $crud->unset_fields('accomodation_id');
+        // $crud->set_relation('category','afric_aventure_accomodations_categories','title',array("parent >" => 0));
         //$crud->columns('accomodation_name','category','slider_photo1','slider_title_photo1','slider_teaser_photo1','slider_photo2','slider_title_photo2','slider_teaser_photo2','slider_photo3','slider_title_photo3','slider_teaser_photo3');
         //$crud->fields('accomodation_name','category','slider_photo1','slider_title_photo1','slider_teaser_photo1','slider_photo2','slider_title_photo2','slider_teaser_photo2','slider_photo3','slider_title_photo3','slider_teaser_photo3');
         //$crud->required_fields('slider_photo1','slider_photo2','slider_photo3');
