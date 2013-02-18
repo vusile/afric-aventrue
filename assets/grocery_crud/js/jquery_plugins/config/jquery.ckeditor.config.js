@@ -31,7 +31,6 @@ $(function(){
 		filebrowserWindowWidth : '1000',
 		filebrowserWindowHeight : '700',
 		extraPlugins: 'MediaEmbed',
-		format_p: [{ element : 'p', attributes : { 'class' : 'contentFonts' } }],
 		forcePasteAsPlainText : true,
 		pasteFromWordRemoveStyles : true,
 		stylesSet :[

@@ -1,4 +1,9 @@
-		
+		 <?php 
+     if($this->uri->segment(1)!='en')
+             $more='Lire la Suite';
+           else
+              $more = 'Read More';
+              ?>
       <div class="row">
         <div class="span12 ">
           <div class="full_width">
@@ -36,9 +41,9 @@
           ?>
       <?php  
          if($this->uri->segment(1)!='en'):?>
-     <a href="<?php echo $page ?>/<?php  echo $destinations->url  ?>">Read More</a>
+     <a href="<?php echo $page ?>/<?php  echo $destinations->url  ?>"><?php echo $more; ?></a>
       <?php else: ?>
-     <a href="<?php echo $page ?>/<?php  echo $destinations->en_url  ?>">Read More</a>
+     <a href="<?php echo $page ?>/<?php  echo $destinations->en_url  ?>"><?php echo $more; ?></a>
       <?php endif; ?>
     
        </p>

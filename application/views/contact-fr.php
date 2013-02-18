@@ -11,7 +11,7 @@
           <h1><?php if(isset($title)) echo $title ?></h1>
            <p><?php if(isset($details)) echo $details ?></p>
            <div class="row">
-         <div class="span6">
+         <div class="span5">
           <form class="form-horizontal" action="send_message/1" method="post" name="contact_form" id="contact_form">
             <legend>Données Personnelles:</legend>
               <div class="control-group">
@@ -87,7 +87,7 @@
               </div>
                  </div> <!--  end of span5 -->
           
-                 <div class="span6">
+                 <div class="span7">
                   <div class="social_icons">
                  <script type="text/javascript" src="http://cdn.dev.skype.com/uri/skype-uri.js"></script>
                   <div id="genSkypeCall_01">
@@ -100,10 +100,11 @@
                               imageColor: "skype"
                           });
                       </script>
+                       </div>
                   <div class="social_fb">
-                      <div class="fb-like-box" data-href="http://www.facebook.com/pages/AfricAventure/91990565246?fref=ts" data-width="292" data-show-faces="false" data-stream="false" data-header="true"></div>
+                      <div class="fb-like-box" data-href="http://www.facebook.com/pages/AfricAventure/91990565246?fref=ts" data-width="292" data-show-faces="true" data-stream="false" data-header="false"></div>
                     </div>  <!-- end of social fb -->
-                 </div>
+                
                  </div>
                  </div>
             </div> <!--  end of row -->

@@ -148,10 +148,6 @@ clear: both;
 #footer{
  margin-top: 20px;
   height: 30px;
-  /*position:absolute;*/
-  /*bottom:0;*/
- /*width:100%;*/
- /*margin-bottom: 20px;*/
 }
 #hakimiliki{
   margin-left: 465px;
@@ -193,6 +189,7 @@ margin-top: -30px;
 }
 #futa ul li a:hover{
   text-decoration:underline;
+  color: #c88132;
 }
 .linki a{
   color: #0088cc;
@@ -260,17 +257,10 @@ margin-left: -40px;
 .full_width_contact_form p{
   margin: 0px 0px 5px 15px;
 }
-.currency{
-
-}
-#input_align p{
-
-}
 #other_comments{
 width: 450px;
 height: 200px;
 margin-left: 60px;
-
 }
 #captcha_wrapper img{
 margin-left: 60px;
@@ -291,12 +281,19 @@ font-weight:bold;
 .social_icons{
   border-left: 1px dotted #e5e5e5;
   margin: 60px 0px 0px 100px;
-  height: 190px;
+  height: 360px;
 }
 .social_fb{
   margin-left: 42px;
 }
-
+#genSkypeCall_01{
+margin: 0px -32px -20px -10px;
+}
+textarea:focus, input[type="text"]:focus, input[type="password"], input[type="datetime"]:focus, input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .form-horizontal input:focus, select[multiple]:focus, .form-horizontal textarea input:focus,  .form-horizontal select:focus{
+ background-color:#f0dcc4;
+ color:#000000;
+ cursor: pointer;
+}
 /*!
  * Bootstrap v2.2.2
  * Dont delete or update them!

@@ -7,20 +7,26 @@
           <div id="myCarousel" class="carousel slide">
               <!-- Carousel items -->
               <div class="carousel-inner">
-                 <?php foreach($slider->result() as $image): ?>
+                    
+                     <?php 
+                    $i=0;
+                     foreach($slider->result() as $image): ?>
+                      <?php if($i==0): ?>
+                <div class="active item"> 
+                <?php else: ?>
                 <div class="item">
+                  <?php endif; ?>
                   <img src="assets/uploads/files/<?php echo $image->photo ?>" alt="">
-      <!--             <img src="img/tower_ES.jpeg" alt=""> -->
                    <div class="carousel-caption">
                     <h4><?php echo $image->photo_title ?></h4>
                       <p><?php echo $image->caption ?></p>
-
-
                       
                     </div>
                    
                 </div>
-                  <?php endforeach; ?>
+                  <?php 
+                   $i++;
+                  endforeach; ?>
                   </div>
 
             
