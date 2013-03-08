@@ -128,6 +128,7 @@ class Fr extends CI_Controller {
 	{   
 		$this->load->helper('text');
 		$header['color']='#091626';
+		$header['color_nav']='#c6d9f1';
 		$this->db->where('url', $url);
 		$result=$this->db->get('afric_aventure_beach_vacation_categories');
 
@@ -150,6 +151,7 @@ class Fr extends CI_Controller {
 	public function plage($url)
 	{   
 		$header['color']='#091626';
+		$header['color_nav']='#c6d9f1';
 		$this->db->where('url', $url);
 		$query = $this->db->get('afric_aventure_beach_vacations');
 		$data['title'] = $query->row()->title;

@@ -16,7 +16,6 @@
 				<ul >
 						<li><a href="en/about_us">About Us</a></li>
 					<li><a href="en/contact_us">Contact Us</a></li>
-						<li><a href="sitemap.xml">Sitemap</a></li>
 					</ul>
 
         </div>

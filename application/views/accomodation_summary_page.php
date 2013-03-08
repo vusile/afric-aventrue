@@ -31,7 +31,7 @@
                 <?php else: ?>
                 <div class="item"> 
               <?php endif; ?>
-                  <img src="<?php if(isset($slider->slide_pic)) echo $slider->slide_pic ?>" alt="">
+                  <img src="assets/uploads/files/<?php if(isset($slider->slide_pic)) echo $slider->slide_pic ?>" alt="">
                    <div class="carousel-caption">
                     <h4><?php if(isset($slider->slide_title)) echo $slider->slide_title ?></h4>
                       <p><?php if(isset($slider->slide_teaser)) echo $slider->slide_teaser ?></p>

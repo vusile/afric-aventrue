@@ -16,7 +16,6 @@
 				<ul >
 						<li><a href="qui_sommes_nous">Qui Sommes-Nous</a></li>
 					<li><a href="nous_contacter">Nous Contacter</a></li>
-						<li><a href="sitemap.xml">Plan du site</a></li>
 					</ul>
 
         </div>

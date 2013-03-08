@@ -39,7 +39,16 @@ class En extends CI_Controller {
 				$menu .= "<li class = 'dropdown";
 				if($this->uri->segment(2) ==  $page->en_url)
 					$menu .= " active ";
-				$menu .= "'><a data-toggle='dropdown' class='dropdown-toggle' href = '" . current_url() . "'>"  . $page->en_title .  "<b class='caret'></b></a><ul class='dropdown-menu'>";
+
+				$class = '';
+				$subClass = '';
+
+				if($page->en_url == 'beach-vacations')
+				{
+					$class .= '-blue beach';
+					$subClass .= 'sub-beach';
+				}
+				$menu .= "'><a data-toggle='dropdown' class='dropdown-toggle" . $class . "' href = '" . current_url() . "'>"  . $page->en_title .  "<b class='caret'></b></a><ul class='dropdown-menu'>";
 			
 				$this->db->where('parent', 0);
 				$categories = $this->db->get($page->draws_from);
@@ -52,14 +61,14 @@ class En extends CI_Controller {
 					$cats = $this->db->get($page->draws_from);
 
 					if($cats->num_rows() == 0)
-						$menu .= "<li><a href = 'en/" . $page->en_url . '/' . $category->en_url . "'>"  . $category->en_title .  "</a></li>";
+						$menu .= "<li><a class = '". $subClass ."' href = 'en/" . $page->en_url . '/' . $category->en_url . "'>"  . $category->en_title .  "</a></li>";
 
 					else {
-						$menu .= "<li class = 'dropdown-submenu'><a href = '" . current_url() . "'>"  . $category->en_title .  "</a><ul class='dropdown-menu'>";
+						$menu .= "<li class = 'dropdown-submenu'><a class = '". $subClass ."' href = '" . current_url() . "'>"  . $category->en_title .  "</a><ul class='dropdown-menu'>";
 						
 						foreach($cats->result() as $cat)
 						{
-							$menu .= "<li><a href = 'en/" . $page->en_url . '/' . $category->en_url .'/' . $cat->en_url . "'>"  . $cat->en_title .  "</a></li>";
+							$menu .= "<li><a class = '". $subClass ."' href = 'en/" . $page->en_url . '/' . $category->en_url .'/' . $cat->en_url . "'>"  . $cat->en_title .  "</a></li>";
 						}
 
 						$menu .= '</ul></li>';
@@ -132,6 +141,7 @@ class En extends CI_Controller {
 	{   
 		$this->load->helper('text');
 		$header['color']='#091626';
+		$header['color_nav']='#c6d9f1';
 		$this->db->where('en_url', $url);
 		$result=$this->db->get('afric_aventure_beach_vacation_categories');
 
@@ -152,6 +162,7 @@ class En extends CI_Controller {
 	public function beach($url)
 	{   
 		$header['color']='#091626';
+		$header['color_nav']='#c6d9f1';
 		$this->db->where('en_url', $url);
 		$query = $this->db->get('afric_aventure_beach_vacations');
 		$data['title'] = $query->row()->en_title;

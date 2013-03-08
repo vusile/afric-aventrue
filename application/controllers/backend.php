@@ -141,24 +141,28 @@ class Backend extends CI_Controller {
 
 				$this->db->where('id',$primary_key);
 				$safari=$this->db->get('afric_aventure_safaris');
-				if($safari->row()->accomodation_park == 0)
-				{
+	
 					$datas = array(
 						'title'=>$post_array['title'],
 						'en_title'=>$post_array['en_title'],
-						'parent'=>2
+						'parent'=>1
 					);
 					
-					$this->db->insert('afric_aventure_accomodations_categories', $datas);
-					$id = $this->db->insert_id();
-					$datas = array();
-					$data['accomodation_park'] = $id;
+					if($safari->row()->accomodation_park == 0)
+					{
+						$this->db->insert('afric_aventure_accomodations_categories', $datas);
+						$id = $this->db->insert_id();
+						$datas = array();
+						$data['accomodation_park'] = $id;
+					}
+
+					else $id = $safari->row()->accomodation_park;
 
 					$datas['url']=$this->make_url_from_title($post_array['title'],'afric_aventure_accomodations_categories',$id);
 					$datas['en_url']=$this->make_url_from_title($post_array['en_title'],'afric_aventure_accomodations_categories',$id,1);
 					$this->db->where('id', $id);
 					$this->db->update('afric_aventure_accomodations_categories', $datas);
-				}
+				
 			}
 
 		}
@@ -170,8 +174,7 @@ class Backend extends CI_Controller {
 			{
 				$this->db->where('id',$primary_key);
 				$beach=$this->db->get('afric_aventure_beach_vacations');
-				if($beach->row()->accomodation_beach == 0)
-				{
+				
 
 					$datas = array(
 						'title'=>$post_array['title'],
@@ -179,14 +182,19 @@ class Backend extends CI_Controller {
 						'parent'=>2
 					);
 					
-					$this->db->insert('afric_aventure_accomodations_categories', $datas);
-					$id = $this->db->insert_id();
-					$data['accomodation_beach'] = $id;
+					if($beach->row()->accomodation_beach == 0)
+					{
+						$this->db->insert('afric_aventure_accomodations_categories', $datas);
+						$id = $this->db->insert_id();
+						$data['accomodation_beach'] = $id;
+					}
+					else $id = $beach->row()->accomodation_beach;
+
 					$datas['url']=$this->make_url_from_title($post_array['title'],'afric_aventure_accomodations_categories',$id);
 					$datas['en_url']=$this->make_url_from_title($post_array['en_title'],'afric_aventure_accomodations_categories',$id,1);
 					$this->db->where('id', $id);
 					$this->db->update('afric_aventure_accomodations_categories', $datas);
-				}
+				
 			}
 		}
 
@@ -232,10 +240,24 @@ class Backend extends CI_Controller {
         //$crud->callback_before_insert(array($this,'insert_beach_vacation'));
         $crud->callback_after_insert(array($this, 'generate_thumb'));
 		$crud->callback_after_update(array($this, 'generate_thumb'));
+
+		$crud->callback_before_delete(array($this,'beach_callback'));
+
         $output = $crud->render();
 
         $this->_example_output($output);       
-	}	
+	}
+	 function beach_callback($primary_key)
+		{
+			$this->db->where('id',$primary_key);
+			$data = $this->db->get('afric_aventure_beach_vacations');
+			$id=$data->row()->accomodation_beach;
+			$this->db->delete('afric_aventure_accomodations_categories', array('id' => $id)); 
+
+
+		}	
+
+
 
 	function insert_beach_vacation($post_array)
 	{
@@ -310,33 +332,22 @@ class Backend extends CI_Controller {
        // $crud->callback_before_insert(array($this,'insert_safari_vacation'));
         $crud->callback_after_insert(array($this, 'generate_thumb'));
 		$crud->callback_after_update(array($this, 'generate_thumb'));
+	    $crud->callback_before_delete(array($this,'safaris_callback'));
         $output = $crud->render();
 
         $this->_example_output($output);       
 	}	
+ 
+ function safaris_callback($primary_key)
+{
+  $this->db->where('id',$primary_key);
+    $data = $this->db->get('afric_aventure_safaris');
+    $id=$data->row()->accomodation_park;
+    $this->db->delete('afric_aventure_accomodations_categories', array('id' => $id)); 
 
-
-	function insert_safari_vacation($post_array)
-	{
-		if($post_array['category']==1)
-		{
-			$data = array(
-				'title'=>$post_array['title'],
-				'en_title'=>$post_array['en_title'],
-				'parent'=>1
-			);
-			
-			$this->db->insert('afric_aventure_accomodations_categories', $data);
-			$id = $this->db->insert_id();
-
-			$post_array['accomodation_park'] = $id;
-
-			$data['url']=$this->make_url_from_title($post_array['title'],'afric_aventure_accomodations_categories',$id);
-			$data['en_url']=$this->make_url_from_title($post_array['en_title'],'afric_aventure_accomodations_categories',$id,1);
-			$this->db->where('id', $id);
-			$this->db->update('afric_aventure_accomodations_categories', $data);
-		}
-	}
+  
+}
+ 
 
 
 
@@ -378,18 +389,10 @@ class Backend extends CI_Controller {
 
 
         $crud->where('accomodation_id',$accomodation);
-        $crud->set_field_upload('slide_pic');
+        $crud->set_field_upload('slide_pic','assets/uploads/files/');
+         $crud->display_as('slide_pic','Photo (Must be 780 x 400 pixels)');
         $crud->unset_columns('accomodation_id');
         $crud->unset_fields('accomodation_id');
-        // $crud->set_relation('category','afric_aventure_accomodations_categories','title',array("parent >" => 0));
-        //$crud->columns('accomodation_name','category','slider_photo1','slider_title_photo1','slider_teaser_photo1','slider_photo2','slider_title_photo2','slider_teaser_photo2','slider_photo3','slider_title_photo3','slider_teaser_photo3');
-        //$crud->fields('accomodation_name','category','slider_photo1','slider_title_photo1','slider_teaser_photo1','slider_photo2','slider_title_photo2','slider_teaser_photo2','slider_photo3','slider_title_photo3','slider_teaser_photo3');
-        //$crud->required_fields('slider_photo1','slider_photo2','slider_photo3');
-        //$crud->set_field_upload('slider_photo1','assets/uploads/files');
-        //$crud->set_field_upload('slider_photo2','assets/uploads/files');
-        //$crud->set_field_upload('slider_photo3','assets/uploads/files');
-       // $crud->callback_after_insert(array($this, 'generate_thumb'));
-		//$crud->callback_after_update(array($this, 'generate_thumb'));
         $output = $crud->render();
 
         $this->_example_output($output);       
