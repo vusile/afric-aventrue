@@ -28,7 +28,7 @@ background-image: linear-gradient(to bottom, <?php if(isset($color_nav)) echo $c
 background-repeat: repeat-x;
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
 }
-.nav > .beach > a:hover {
+.nav a:hover {
   background-color:  <?php if(isset($color_nav)) echo $color_nav ?>;
   background-image: -moz-linear-gradient(top, <?php if(isset($color_nav)) echo $color_nav ?>, <?php if(isset($color_nav)) echo $color_nav ?>);
 background-image: -webkit-gradient(linear, 0 0, 0 100%, from(<?php if(isset($color_nav)) echo $color_nav ?>), to(<?php if(isset($color_nav)) echo $color_nav ?>));

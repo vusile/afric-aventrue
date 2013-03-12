@@ -17,7 +17,7 @@
 
 .flag  img{
 margin: 145px 0px 0px 180px;
-}
+};
 .flag  p{
     color: #ffffff;
     font-size: 14px;
@@ -47,7 +47,7 @@ margin:0px;
 /*about us page settings*/
 .full_width{
   color: #000000;
-  background-color: #d7cabb;
+  /*background-color: #d7cabb;*/
   margin: 0px 0px 10px 0px;
   padding-bottom: 15px;
   min-height: 450px;

@@ -36,11 +36,20 @@ class Fr extends CI_Controller {
 				if($this->uri->segment(1) ==  $page->url)
 					$menu .= " active ";
 
+				$class = '';
+				$subClass = '';
+
+				if($page->url == 'vacances-plage')
+				{
+					$class .= '-blue beach';
+					$subClass .= 'sub-beach';
+				}
+
 				$menu .="'><a data-toggle='dropdown' class='dropdown-toggle' href = '" . current_url() . "'>"  . $page->title .  "<b class='caret'></b></a><ul class='dropdown-menu'>";
 			
 				$this->db->where('parent', 0);
 				$categories = $this->db->get($page->draws_from);
-		
+				$subClass = "";
 
 				foreach($categories->result() as $category)
 				{
@@ -49,7 +58,26 @@ class Fr extends CI_Controller {
 					$cats = $this->db->get($page->draws_from);
 
 					if($cats->num_rows() == 0)
-						$menu .= "<li><a href = '" . $page->url . '/' . $category->url . "'>"  . $category->title .  "</a></li>";
+					{
+
+						if(!isset( $category->draws_from) )
+							$menu .= "<li><a href = '" . $page->url . '/' . $category->url . "'>"  . $category->title .  "</a></li>";
+
+						else
+						{
+							$this->db->where('category', $category->id);
+							$newSubs = $this->db->get($category->draws_from);
+
+							$menu .= "<li class = 'dropdown-submenu'><a class = '". $subClass ."' href = '" . current_url() . "'>"  . $category->title .  "</a><ul class='dropdown-menu'>";
+
+							foreach($newSubs->result() as $newSub)
+							{
+								$menu .= "<li><a class = '". $subClass ."' href = '" . $category->url_prefix . '/'  . $newSub->url . "'>"  . $newSub->title .  "</a></li>";
+							}
+
+							$menu .= '</ul></li>';
+						}
+					}
 
 					else {
 						$menu .= "<li class = 'dropdown-submenu'><a href = '" . current_url() . "'>"  . $category->title .  "</a><ul class='dropdown-menu'>";

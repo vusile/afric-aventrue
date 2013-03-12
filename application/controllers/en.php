@@ -45,8 +45,8 @@ class En extends CI_Controller {
 
 				if($page->en_url == 'beach-vacations')
 				{
-					$class .= '-blue beach';
-					$subClass .= 'sub-beach';
+					$class .= '';
+					$subClass .= '';
 				}
 				$menu .= "'><a data-toggle='dropdown' class='dropdown-toggle" . $class . "' href = '" . current_url() . "'>"  . $page->en_title .  "<b class='caret'></b></a><ul class='dropdown-menu'>";
 			
@@ -61,7 +61,25 @@ class En extends CI_Controller {
 					$cats = $this->db->get($page->draws_from);
 
 					if($cats->num_rows() == 0)
-						$menu .= "<li><a class = '". $subClass ."' href = 'en/" . $page->en_url . '/' . $category->en_url . "'>"  . $category->en_title .  "</a></li>";
+					{
+						if(!isset( $category->draws_from) )
+							$menu .= "<li><a class = '". $subClass ."' href = 'en/" . $page->en_url . '/' . $category->en_url . "'>"  . $category->en_title .  "</a></li>";
+
+						else
+						{
+							$this->db->where('category', $category->id);
+							$newSubs = $this->db->get($category->draws_from);
+
+							$menu .= "<li class = 'dropdown-submenu'><a class = '". $subClass ."' href = '" . current_url() . "'>"  . $category->en_title .  "</a><ul class='dropdown-menu'>";
+
+							foreach($newSubs->result() as $newSub)
+							{
+								$menu .= "<li><a class = '". $subClass ."' href = 'en/" . $category->en_url_prefix . '/'  . $newSub->en_url . "'>"  . $newSub->en_title .  "</a></li>";
+							}
+
+							$menu .= '</ul></li>';
+						}
+					}
 
 					else {
 						$menu .= "<li class = 'dropdown-submenu'><a class = '". $subClass ."' href = '" . current_url() . "'>"  . $category->en_title .  "</a><ul class='dropdown-menu'>";
@@ -95,7 +113,7 @@ class En extends CI_Controller {
 					$menu .= "<li class = 'dropdown";
 					if($this->uri->segment(2) == $page->en_url)
 						$menu .= " active ";
-					$menu .= "'><a data-toggle='dropdown' class='dropdown-toggle' href = '" . current_url() . "'>"  . $page->en_title .  "<b class='caret'></b></a><ul class='dropdown-menu'>";		
+					$menu .= "'><a data-toggle='dropdown' class='dropdown-toggle' href = '" . current_url() . "'>"  . $page->en_title .  "<b class='caret'><b></a><ul class='dropdown-menu'>";		
 					foreach($kids->result() as $kid)
 					{
 						$menu .= "<li ><a href = 'en/" . $page->en_url . '/' . $kid->en_url . "'>"  . $kid->en_title .  "</a></li>";
