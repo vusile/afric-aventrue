@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 08, 2013 at 01:53 PM
+-- Generation Time: Mar 13, 2013 at 03:12 PM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -178,6 +178,9 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_beach_vacation_categories` (
   `parent` int(11) NOT NULL,
   `url` varchar(160) NOT NULL,
   `en_url` varchar(255) NOT NULL,
+  `draws_from` varchar(40) NOT NULL,
+  `url_prefix` varchar(40) NOT NULL,
+  `en_url_prefix` varchar(40) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
@@ -185,9 +188,9 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_beach_vacation_categories` (
 -- Dumping data for table `afric_aventure_beach_vacation_categories`
 --
 
-INSERT INTO `afric_aventure_beach_vacation_categories` (`id`, `title`, `en_title`, `parent`, `url`, `en_url`) VALUES
-(1, 'Destinations de Vacances de Plage', 'Beach Vacation Destinations', 0, 'destinations-de-vacances-de-plage', 'beach-vacation-destinations'),
-(2, 'Thèmes de Vacances Plage', 'Beach Vacation Themes', 0, 'themes-de-vacances-plage', 'beach-vacation-themes');
+INSERT INTO `afric_aventure_beach_vacation_categories` (`id`, `title`, `en_title`, `parent`, `url`, `en_url`, `draws_from`, `url_prefix`, `en_url_prefix`) VALUES
+(1, 'Destinations de Vacances de Plage', 'Beach Vacation Destinations', 0, 'destinations-de-vacances-de-plage', 'beach-vacation-destinations', 'afric_aventure_beach_vacations', 'plage', 'beach'),
+(2, 'Thèmes de Vacances Plage', 'Beach Vacation Themes', 0, 'themes-de-vacances-plage', 'beach-vacation-themes', 'afric_aventure_beach_vacations', 'plage', 'beach');
 
 -- --------------------------------------------------------
 
@@ -202,7 +205,7 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_captcha` (
   `word` varchar(20) NOT NULL,
   PRIMARY KEY (`captcha_id`),
   KEY `word` (`word`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=948 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1009 ;
 
 --
 -- Dumping data for table `afric_aventure_captcha`
@@ -434,7 +437,68 @@ INSERT INTO `afric_aventure_captcha` (`captcha_id`, `captcha_time`, `ip_address`
 (944, 1362748538, '127.0.0.1', '2MY5ZC6'),
 (945, 1362748575, '127.0.0.1', 'V4PAQZT'),
 (946, 1362748604, '127.0.0.1', '4JW3BU8'),
-(947, 1362748611, '127.0.0.1', 'KX8ABPH');
+(947, 1362748611, '127.0.0.1', 'KX8ABPH'),
+(948, 1363090486, '127.0.0.1', 'S7K3CXW'),
+(949, 1363090567, '127.0.0.1', '269XZPN'),
+(950, 1363096110, '127.0.0.1', 'UFGE325'),
+(951, 1363097090, '127.0.0.1', '9H2BJK7'),
+(952, 1363097141, '127.0.0.1', 'ZPFJ3QD'),
+(953, 1363097196, '127.0.0.1', '9Z8VE63'),
+(954, 1363097205, '127.0.0.1', 'CZSXUKW'),
+(955, 1363097481, '127.0.0.1', 'X9J2VFW'),
+(956, 1363099456, '127.0.0.1', '8J9WAD5'),
+(957, 1363166472, '127.0.0.1', '3M54TKV'),
+(958, 1363166580, '127.0.0.1', 'W2NSDEQ'),
+(959, 1363166606, '127.0.0.1', 'AT498CF'),
+(960, 1363166696, '127.0.0.1', 'JRESB9D'),
+(961, 1363166884, '127.0.0.1', 'Y8UW9XT'),
+(962, 1363166922, '127.0.0.1', 'M2GQ3WH'),
+(963, 1363166930, '127.0.0.1', 'TYD673W'),
+(964, 1363166930, '127.0.0.1', 'PW85U4K'),
+(965, 1363167024, '127.0.0.1', 'UZVEN6F'),
+(966, 1363167107, '127.0.0.1', 'VZFQ8HW'),
+(967, 1363167309, '127.0.0.1', 'UG8CH4X'),
+(968, 1363167351, '127.0.0.1', 'JN6WEY7'),
+(969, 1363167604, '127.0.0.1', '7RGWPT6'),
+(970, 1363167922, '127.0.0.1', '5X2M7QV'),
+(971, 1363167972, '127.0.0.1', 'SX9PQNV'),
+(972, 1363168031, '127.0.0.1', '79SMYHR'),
+(973, 1363168066, '127.0.0.1', 'BGWKECH'),
+(974, 1363168977, '127.0.0.1', 'JZ4YAD7'),
+(975, 1363169164, '127.0.0.1', 'JWDB3U4'),
+(976, 1363169248, '127.0.0.1', 'UTN8MFJ'),
+(977, 1363175903, '127.0.0.1', '3TZS58X'),
+(978, 1363175926, '127.0.0.1', 'JNDXPF3'),
+(979, 1363175965, '127.0.0.1', '9TPWSYE'),
+(980, 1363177839, '127.0.0.1', 'J87VKAZ'),
+(981, 1363177919, '127.0.0.1', '4HZ3RCK'),
+(982, 1363177950, '127.0.0.1', 'D4HGC36'),
+(983, 1363178331, '127.0.0.1', 'S52JRCY'),
+(984, 1363178390, '127.0.0.1', 'GQJZRY2'),
+(985, 1363178414, '127.0.0.1', 'TN8MJS3'),
+(986, 1363178421, '127.0.0.1', 'M5J6AEK'),
+(987, 1363178472, '127.0.0.1', 'PMHWB3N'),
+(988, 1363178619, '127.0.0.1', '3HZ4NRX'),
+(989, 1363178714, '127.0.0.1', '2QPZ5BR'),
+(990, 1363179176, '127.0.0.1', '2SCA3GD'),
+(991, 1363179253, '127.0.0.1', 'VAW9728'),
+(992, 1363179442, '127.0.0.1', 'ATCFK8E'),
+(993, 1363179727, '127.0.0.1', '2BZ5PES'),
+(994, 1363179823, '127.0.0.1', 'MAB78HW'),
+(995, 1363179966, '127.0.0.1', '3UST8FD'),
+(996, 1363180028, '127.0.0.1', 'UB6HVTG'),
+(997, 1363180342, '127.0.0.1', 'Z9QH4US'),
+(998, 1363180592, '127.0.0.1', 'WNZTDAX'),
+(999, 1363180884, '127.0.0.1', 'VSQC5RH'),
+(1000, 1363180906, '127.0.0.1', 'U2QRASC'),
+(1001, 1363182581, '127.0.0.1', '3BCKQN2'),
+(1002, 1363182646, '127.0.0.1', 'BP9NX7Q'),
+(1003, 1363182746, '127.0.0.1', 'WQDS36M'),
+(1004, 1363182807, '127.0.0.1', 'DF2U67G'),
+(1005, 1363182878, '127.0.0.1', '3WKAME2'),
+(1006, 1363182967, '127.0.0.1', 'JPUCGK9'),
+(1007, 1363183036, '127.0.0.1', 'Q98UHD5'),
+(1008, 1363183446, '127.0.0.1', '89YPJVQ');
 
 -- --------------------------------------------------------
 
@@ -655,6 +719,9 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_safaris_categories` (
   `parent` int(11) NOT NULL,
   `url` varchar(200) NOT NULL,
   `en_url` varchar(255) NOT NULL,
+  `draws_from` varchar(40) NOT NULL,
+  `url_prefix` varchar(40) NOT NULL,
+  `en_url_prefix` varchar(40) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
@@ -662,9 +729,9 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_safaris_categories` (
 -- Dumping data for table `afric_aventure_safaris_categories`
 --
 
-INSERT INTO `afric_aventure_safaris_categories` (`id`, `title`, `en_title`, `parent`, `url`, `en_url`) VALUES
-(1, 'Parcs Servis', 'Parks Served', 0, 'parcs-servis', 'parks-served'),
-(2, 'Safaris Thématiques', 'Themed Safaris', 0, 'safaris-thematiques', 'themed-safaris');
+INSERT INTO `afric_aventure_safaris_categories` (`id`, `title`, `en_title`, `parent`, `url`, `en_url`, `draws_from`, `url_prefix`, `en_url_prefix`) VALUES
+(1, 'Parcs Servis', 'Parks Served', 0, 'parcs-servis', 'parks-served', 'afric_aventure_safaris', 'safari', 'safari'),
+(2, 'Safaris Thématiques', 'Themed Safaris', 0, 'safaris-thematiques', 'themed-safaris', 'afric_aventure_safaris', 'safari', 'safari');
 
 -- --------------------------------------------------------
 
@@ -693,6 +760,7 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_slider` (
   `photo` varchar(100) NOT NULL,
   `en_caption` varchar(250) NOT NULL,
   `en_photo_title` varchar(250) NOT NULL,
+  `priority` int(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
@@ -700,11 +768,11 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_slider` (
 -- Dumping data for table `afric_aventure_slider`
 --
 
-INSERT INTO `afric_aventure_slider` (`id`, `photo_title`, `caption`, `photo`, `en_caption`, `en_photo_title`) VALUES
-(2, 'Cras justo odio, dapibus ac in', 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehic', '35459-animals-q-c-940-400-9.jpg', '', ''),
-(3, 'Lorem ipsum dolor sit amet, consectetur', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto rerum alias aliquid ex quis assumenda ab adipisci odio. Blanditiis consequatur qu', '27a29-people-q-c-940-400-2.jpg', '', ''),
-(4, 'Ut a pulvinar purus. Fusce ac diam ligula', 'Nam quis leo lectus, sit amet mollis metus. Aliquam sed dolor nec turpis viverra malesuada. Nulla id magna sed augue aliquam lobortis sed quis lorem. ', '98c78-animals-q-c-940-400-1.jpg', '', ''),
-(5, 'Lorem Lipsum Liakjfnnn', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ac velit massa. Donec eleifend laoreet eros. Ut interdum risus vel nisi tempor tempo', '59fe5-technics-q-c-940-400-7.jpg', '', '');
+INSERT INTO `afric_aventure_slider` (`id`, `photo_title`, `caption`, `photo`, `en_caption`, `en_photo_title`, `priority`) VALUES
+(2, 'Cras justo odio, dapibus ac in', 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehic', '35459-animals-q-c-940-400-9.jpg', '', '', 0),
+(3, 'Lorem ipsum dolor sit amet, consectetur', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto rerum alias aliquid ex quis assumenda ab adipisci odio. Blanditiis consequatur qu', '27a29-people-q-c-940-400-2.jpg', '', '', 0),
+(4, 'Ut a pulvinar purus. Fusce ac diam ligula', 'Nam quis leo lectus, sit amet mollis metus. Aliquam sed dolor nec turpis viverra malesuada. Nulla id magna sed augue aliquam lobortis sed quis lorem. ', '98c78-animals-q-c-940-400-1.jpg', '', '', 0),
+(5, 'Lorem Lipsum Liakjfnnn', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ac velit massa. Donec eleifend laoreet eros. Ut interdum risus vel nisi tempor tempo', '59fe5-technics-q-c-940-400-7.jpg', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -738,7 +806,7 @@ CREATE TABLE IF NOT EXISTS `afric_aventure_users` (
 --
 
 INSERT INTO `afric_aventure_users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '\0\0', 'administrator', '59beecdf7fc966e2f17fd8f65a4a9aeb09d4a3d4', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1362648174, 1, 'Admin', 'istrator', 'ADMIN', '0');
+(1, '\0\0', 'administrator', '59beecdf7fc966e2f17fd8f65a4a9aeb09d4a3d4', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1363090680, 1, 'Admin', 'istrator', 'ADMIN', '0');
 
 -- --------------------------------------------------------
 
