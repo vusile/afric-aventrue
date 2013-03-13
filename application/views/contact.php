@@ -101,7 +101,35 @@
                  </div>
                  </div>
             </div> <!--  end of row -->
-           
+            <div class="row">
+             <div class="span6">
+              <div class="groupe">
+              <div class="control-groupA">
+                <label class="control-label" for="no_of_adults">No. of Adults:</label>
+                <div class="controls">
+                   <?php echo form_error('no_of_adults'); ?>
+                  <input type="text" id="no_of_adults" name="no_of_adults" value="<?php echo set_value('no_of_adults'); ?>" placeholder="" required>
+
+                </div>
+              </div>
+              </div>
+              
+            </div>   <!-- end of span6 -->
+
+            <div class="span6">
+             <div class="groupa">
+              <div class="control-groupA">
+                 <label class="control-label" for="no_of_rooms">No. of Rooms:</label>
+                <div class="controls">
+                   <?php echo form_error('no_of_rooms'); ?>
+                  <input type="text" id="no_of_rooms" name="no_of_rooms" value="<?php echo set_value('no_of_rooms'); ?>" placeholder="" required>
+
+                </div>
+              </div>
+              </div>
+              </div>
+            
+             </div>  <!-- end of row -->
 
             <div class="row">
                <div class="span6">
@@ -131,39 +159,7 @@
      
              
              </div>  <!-- end of row -->
-            
-             
-              
-          
-              <div class="row">
-             <div class="span6">
-              <div class="groupe">
-              <div class="control-groupA">
-                <label class="control-label" for="no_of_adults">No. of Adults:</label>
-                <div class="controls">
-                   <?php echo form_error('no_of_adults'); ?>
-                  <input type="text" id="no_of_adults" name="no_of_adults" value="<?php echo set_value('no_of_adults'); ?>" placeholder="" required>
-
-                </div>
-              </div>
-              </div>
-              
-            </div>   <!-- end of span6 -->
-
-            <div class="span6">
-             <div class="groupa">
-              <div class="control-groupA">
-                 <label class="control-label" for="no_of_rooms">No. of Rooms:</label>
-                <div class="controls">
-                   <?php echo form_error('no_of_rooms'); ?>
-                  <input type="text" id="no_of_rooms" name="no_of_rooms" value="<?php echo set_value('no_of_rooms'); ?>" placeholder="" required>
-
-                </div>
-              </div>
-              </div>
-              </div>
-            
-             </div>  <!-- end of row -->
+      
             <!--  <br><br><br><br><br><br> -->
             <div class="row">
               <div class="span12">
@@ -343,15 +339,7 @@
                 <div class="controls">
                     <?php echo form_error('themes_i_like_the_most'); ?>
                   <select multiple="multiple" required style = "height: 200px;" id="themes_i_like_the_most[]" name="themes_i_like_the_most" value="<?php echo set_value('themes_i_like_the_most'); ?>">
-             
-                 <optgroup  label="Beach Vacation Themes">
-                  <?php foreach($beaches_afric_aventure_beach_vacations->result() as $themed): ?> 
-                 
-                  <option value="<?php echo $themed->en_title  ?>"><?php echo $themed->en_title ?></option>
-                <?php endforeach; ?>
-                 <optgroup>
-                 <option label="" ></option> 
-                  <optgroup  label="Beach Vacation Themes">
+               <optgroup  label="Safari Themes">
                     <?php foreach($themed_afric_aventure_safaris->result() as $themes): ?> 
                  
                 <option><?php echo $themes->en_title ?></option>
@@ -359,9 +347,14 @@
                 <?php endforeach; ?>
               </optgroup>
                 
-
-                
-
+                 <optgroup  label="Beach Themes">
+                  <?php foreach($beaches_afric_aventure_beach_vacations->result() as $themed): ?> 
+                 
+                  <option value="<?php echo $themed->en_title  ?>"><?php echo $themed->en_title ?></option>
+                <?php endforeach; ?>
+                 </optgroup>
+                 <option label="" ></option> 
+           
                 </select>
 
                 </div>

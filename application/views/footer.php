@@ -4,7 +4,7 @@
 
            <div class="span12" id="footer">
              <hr>
-				<p id="zoom">
+				<p id="zoomzoom">
 				 Site créé par  <a href="http://www.zoomtanzania.com/Zoom-Tanzania-Web-Design" target="_blank">Zoom Tanzania Website Design</a> 
 
 

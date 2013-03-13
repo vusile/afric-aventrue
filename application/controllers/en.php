@@ -70,7 +70,7 @@ class En extends CI_Controller {
 							$this->db->where('category', $category->id);
 							$newSubs = $this->db->get($category->draws_from);
 
-							$menu .= "<li class = 'dropdown-submenu'><a class = '". $subClass ."' href = '" . current_url() . "'>"  . $category->en_title .  "</a><ul class='dropdown-menu'>";
+							$menu .= "<li class = 'dropdown-submenu'><a class = '". $subClass ."' href = 'en/" . $page->en_url . '/' . $category->en_url . "'>"  . $category->en_title .  "</a><ul class='dropdown-menu'>";
 
 							foreach($newSubs->result() as $newSub)
 							{
@@ -159,7 +159,7 @@ class En extends CI_Controller {
 	{   
 		$this->load->helper('text');
 		$header['color']='#091626';
-		$header['color_nav']='#c6d9f1';
+		$header['color_nav']='#e1ebf8';
 		$this->db->where('en_url', $url);
 		$result=$this->db->get('afric_aventure_beach_vacation_categories');
 

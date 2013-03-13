@@ -68,7 +68,7 @@ class Fr extends CI_Controller {
 							$this->db->where('category', $category->id);
 							$newSubs = $this->db->get($category->draws_from);
 
-							$menu .= "<li class = 'dropdown-submenu'><a class = '". $subClass ."' href = '" . current_url() . "'>"  . $category->title .  "</a><ul class='dropdown-menu'>";
+							$menu .= "<li class = 'dropdown-submenu'><a class = '". $subClass ."' href = '" . $page->url . '/' . $category->url . "'>"  . $category->title .  "</a><ul class='dropdown-menu'>";
 
 							foreach($newSubs->result() as $newSub)
 							{
@@ -179,7 +179,7 @@ class Fr extends CI_Controller {
 	public function plage($url)
 	{   
 		$header['color']='#091626';
-		$header['color_nav']='#c6d9f1';
+		$header['color_nav']='#e1ebf8';
 		$this->db->where('url', $url);
 		$query = $this->db->get('afric_aventure_beach_vacations');
 		$data['title'] = $query->row()->title;
@@ -228,7 +228,7 @@ class Fr extends CI_Controller {
 		{
 			$this->db->where('id',$query->row()->accomodation_park);
 			$accomodation=$this->db->get('afric_aventure_accomodations_categories');
-			$data['accomodations'] = "<a href = '" . base_url() . 'hebergement/de-la-parc/' . $accomodation->row()->url . "' style='margin-left: 15px'>" .  $query->row()->title  . " Hebergements</a>";
+			$data['accomodations'] = "<a href = '" . base_url() . 'hebergement/de-la-parc/' . $accomodation->row()->url . "' style='margin-left: 15px'>" .  $query->row()->title  . " Logements</a>";
 		}
 
 
