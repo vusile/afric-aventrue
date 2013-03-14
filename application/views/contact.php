@@ -346,6 +346,7 @@
                   
                 <?php endforeach; ?>
               </optgroup>
+               <option label="" ></option>
                 
                  <optgroup  label="Beach Themes">
                   <?php foreach($beaches_afric_aventure_beach_vacations->result() as $themed): ?> 
@@ -353,7 +354,7 @@
                   <option value="<?php echo $themed->en_title  ?>"><?php echo $themed->en_title ?></option>
                 <?php endforeach; ?>
                  </optgroup>
-                 <option label="" ></option> 
+                 
            
                 </select>
 

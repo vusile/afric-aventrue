@@ -14,8 +14,8 @@
 				</p>
       <div id="futa">
 				<ul >
-						<li><a href="en/about_us">About Us</a></li>
-					<li><a href="en/contact_us">Contact Us</a></li>
+						<li><a href="en/about-us">About Us</a></li>
+					<li><a href="en/contact-us">Contact Us</a></li>
 					</ul>
 
         </div>

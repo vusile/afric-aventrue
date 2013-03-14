@@ -225,19 +225,25 @@ class Backend extends CI_Controller {
         $crud->required_fields('photo');
         $crud->set_field_upload('photo','assets/uploads/files');
         $crud->display_as('photo','Photo (Must be 940 x 400 pixels)');
+         $crud->display_as('rank','Photo Rank (Must be greater than 0)');
         $output = $crud->render();
 
         $this->_example_output($output);       
 	}	
-	function afric_aventure_beach_vacations()
+	function afric_aventure_beach_vacations($category)
 	{
 		$crud = new grocery_CRUD();
- 
+
+		$crud->order_by('rank');
+		$crud->add_action('Move Down', 'img/movedownbtn.png', 'backend/move_beach_down');
+		$crud->add_action('Move Up', 'img/moveupbtn.png', 'backend/move_beach_up');
+ 		$crud->where('category',$category);
         $crud->set_table('afric_aventure_beach_vacations');
         $crud->set_relation('category','afric_aventure_beach_vacation_categories','title');
         $crud->columns('title' ,'en_title','category','text' ,'en_text');
         $crud->fields('title' ,'en_title','category','text' ,'en_text');
-        //$crud->callback_before_insert(array($this,'insert_beach_vacation'));
+        $crud->display_as('rank','Rank (Must be greater than 0)');
+        $crud->callback_before_insert(array($this,'insert_beach_vacation'));
         $crud->callback_after_insert(array($this, 'generate_thumb'));
 		$crud->callback_after_update(array($this, 'generate_thumb'));
 
@@ -247,6 +253,69 @@ class Backend extends CI_Controller {
 
         $this->_example_output($output);       
 	}
+
+	function move_beach_down($beachID)
+	{
+		$this->db->where('id', $beachID);
+		$beachObj=$this->db->get('afric_aventure_beach_vacations');
+		$beach = $beachObj->row();
+
+		$this->db->where('category', $beach->category);
+		$this->db->where('rank >', $beach->rank);
+		$this->db->limit(1);
+		$lowerBeachObj = $this->db->get('afric_aventure_beach_vacations');
+
+		if($lowerBeachObj->num_rows > 0)
+		{
+
+			$lowerBeach = $lowerBeachObj->row();
+
+			$lowerBeachRank = array ('rank' => $beach->rank);
+			$this->db->where('id', $lowerBeach->id);
+			$this->db->update('afric_aventure_beach_vacations',$lowerBeachRank);
+
+			$beachRank = array ('rank' => $lowerBeach->rank);
+			$this->db->where('id', $beach->id);
+			$this->db->update('afric_aventure_beach_vacations',$beachRank);
+		}
+		redirect('/backend/afric_aventure_beach_vacations/1');
+
+	}	
+
+	function move_beach_up($beachID)
+	{
+		$this->db->where('id', $beachID);
+		$beachObj=$this->db->get('afric_aventure_beach_vacations');
+		$beach = $beachObj->row();
+
+		$this->db->where('category', $beach->category);
+		$this->db->where('rank <', $beach->rank);
+		$this->db->order_by('rank','desc');
+		$this->db->limit(1);
+		$higherBeachObj = $this->db->get('afric_aventure_beach_vacations');
+
+		if($higherBeachObj->num_rows > 0)
+		{
+
+			$higherBeach = $higherBeachObj->row();
+
+			$higherBeachRank = array ('rank' => $beach->rank);
+			$this->db->where('id', $higherBeach->id);
+			$this->db->update('afric_aventure_beach_vacations',$higherBeachRank);
+
+			$beachRank = array ('rank' => $higherBeach->rank);
+			$this->db->where('id', $beach->id);
+			$this->db->update('afric_aventure_beach_vacations',$beachRank);
+		}
+		 if($this->uri->segment(3) ==1){
+		 	 redirect('/backend/afric_aventure_beach_vacations/1');
+		 }
+        else{
+        	redirect('/backend/afric_aventure_beach_vacations/2');
+        }
+	}
+
+
 	 function beach_callback($primary_key)
 		{
 			$this->db->where('id',$primary_key);
@@ -284,8 +353,8 @@ class Backend extends CI_Controller {
 		$crud = new grocery_CRUD();
  
         $crud->set_table('afric_aventure_beach_vacation_categories');
-        $crud->unset_fields('parent','url','en_url');
-        $crud->unset_columns('parent','url','en_url');
+        $crud->unset_fields('parent','url','en_url','url_prefix','en_url_prefix','draws_from');
+        $crud->unset_columns('parent','url','en_url','url_prefix','en_url_prefix','draws_from');
         $crud->callback_after_insert(array($this, 'generate_thumb'));
 		$crud->callback_after_update(array($this, 'generate_thumb'));
         $output = $crud->render();
@@ -298,7 +367,10 @@ class Backend extends CI_Controller {
 		$crud = new grocery_CRUD();
  
         //$crud->set_table('afric_aventure_beach_vacation_categories');
-        $crud->set_relation('parent','afric_aventure_accomodations_categories','title');
+       // $crud->set_relation('parent','afric_aventure_accomodations_categories','title');
+	    $crud->unset_fields('parent','url','en_url');
+        $crud->unset_columns('parent','url','en_url');
+		$crud->where('parent',0);
         $crud->callback_after_insert(array($this, 'generate_thumb'));
 		$crud->callback_after_update(array($this, 'generate_thumb'));
         $output = $crud->render();
@@ -312,8 +384,8 @@ class Backend extends CI_Controller {
  
         //$crud->set_table('afric_aventure_safaris_categories');
        // $crud->set_relation('parent','afric_aventure_pages','title');
-		$crud->unset_fields('parent','url','en_url');
-        $crud->unset_columns('parent','url','en_url');
+           $crud->unset_fields('parent','url','en_url','url_prefix','en_url_prefix','draws_from');
+        $crud->unset_columns('parent','url','en_url','url_prefix','en_url_prefix','draws_from');
   		$crud->callback_after_insert(array($this, 'generate_thumb'));
 		$crud->callback_after_update(array($this, 'generate_thumb'));
         $output = $crud->render();
@@ -321,14 +393,18 @@ class Backend extends CI_Controller {
         $this->_example_output($output);       
 	}
 
-	function afric_aventure_safaris()
+	function afric_aventure_safaris($category)
 	{
 		$crud = new grocery_CRUD();
- 
+        $crud->where('category',$category);
+        $crud->order_by('rank');
+   		$crud->add_action('Move Down', 'img/movedownbtn.png', 'backend/move_safari_down');
+		$crud->add_action('Move Up', 'img/moveupbtn.png', 'backend/move_safari_up');
         $crud->set_table('afric_aventure_safaris');
         $crud->set_relation('category','afric_aventure_safaris_categories','title');
         $crud->columns('title' ,'en_title','category','text' ,'en_text');
         $crud->fields('title' ,'en_title','category','text' ,'en_text');
+         $crud->display_as('rank','Rank (Must be greater than 0)');
        // $crud->callback_before_insert(array($this,'insert_safari_vacation'));
         $crud->callback_after_insert(array($this, 'generate_thumb'));
 		$crud->callback_after_update(array($this, 'generate_thumb'));
@@ -336,7 +412,62 @@ class Backend extends CI_Controller {
         $output = $crud->render();
 
         $this->_example_output($output);       
+	}
+	function move_safari_down($safariID)
+	{
+		$this->db->where('id', $safariID);
+		$safariObj=$this->db->get('afric_aventure_safaris');
+		$safari = $safariObj->row();
+
+		$this->db->where('category', $safari->category);
+		$this->db->where('rank >', $safari->rank);
+		$this->db->limit(1);
+		$lowerSafariObj = $this->db->get('afric_aventure_safaris');
+
+		if($lowerSafariObj->num_rows > 0)
+		{
+
+			$lowerSafari = $lowerSafariObj->row();
+
+			$lowerSafariRank = array ('rank' => $safari->rank);
+			$this->db->where('id', $lowerSafari->id);
+			$this->db->update('afric_aventure_safaris',$lowerSafariRank);
+
+			$safariRank = array ('rank' => $lowerSafari->rank);
+			$this->db->where('id', $safari->id);
+			$this->db->update('afric_aventure_safaris',$safariRank);
+		}
+
 	}	
+
+	function move_safari_up($safariID)
+	{
+		$this->db->where('id', $safariID);
+		$safariObj=$this->db->get('afric_aventure_safaris');
+		$safari = $safariObj->row();
+
+		$this->db->where('category', $safari->category);
+		$this->db->where('rank <', $safari->rank);
+		$this->db->order_by('rank','desc');
+		$this->db->limit(1);
+		$higherSafariObj = $this->db->get('afric_aventure_safaris');
+
+		if($higherSafariObj->num_rows > 0)
+		{
+
+			$higherSafari = $higherSafariObj->row();
+
+			$higherSafariRank = array ('rank' => $safari->rank);
+			$this->db->where('id', $higherSafari->id);
+			$this->db->update('afric_aventure_safaris',$higherSafariRank);
+
+			$safariRank = array ('rank' => $higherSafari->rank);
+			$this->db->where('id', $safari->id);
+			$this->db->update('afric_aventure_safaris',$safariRank);
+		}
+
+	}
+	
  
  function safaris_callback($primary_key)
 {

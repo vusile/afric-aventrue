@@ -355,13 +355,14 @@
                   
                 <?php endforeach; ?>
               </optgroup>
+              <option label="" ></option>
                  <optgroup  label="Thèmes plage"> 
                   <?php foreach($beaches_afric_aventure_beach_vacations->result() as $themed): ?> 
                  
                   <option value="<?php echo $themed->title  ?>"><?php echo $themed->title ?></option>
                 <?php endforeach; ?>
                  <optgroup>
-                 <option label="" ></option> 
+                  
           
                 </select>
 
@@ -376,7 +377,7 @@
                    <div class="span12">
                 
                 <div class="control-groupA">
-                 <label class="control-label sub_sahala_label" for="">Avez-vous dèjà voyagé en Afrique Sub-Saharienne?</label><br>
+                 <label class="control-label sub_sahala_label" for="">Avez-vous déjà voyagé en Afrique Sub-Saharienne?</label><br>
                 <div class="controls inline_checkbox">
                   <label class="checkbox inline">
                 <input type="checkbox" id="no_of_travels_to_afrika" value="<?php echo set_value('no_of_travels_to_afrika'); ?>"> Oui

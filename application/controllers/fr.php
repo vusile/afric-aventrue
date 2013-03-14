@@ -65,6 +65,7 @@ class Fr extends CI_Controller {
 
 						else
 						{
+							$this->db->order_by('rank');
 							$this->db->where('category', $category->id);
 							$newSubs = $this->db->get($category->draws_from);
 
@@ -134,6 +135,7 @@ class Fr extends CI_Controller {
 	{    
 
 		$menu['menu'] = $this->menu();
+		$this->db->order_by('rank', 'asc'); 
 		$data['slider'] = $this->db->get('afric_aventure_slider');
 		$this->db->where('url', 'home');
 		$result=$this->db->get('afric_aventure_pages');
@@ -226,9 +228,20 @@ class Fr extends CI_Controller {
 
 		if($query->row()->accomodation_park != 0)
 		{
-			$this->db->where('id',$query->row()->accomodation_park);
-			$accomodation=$this->db->get('afric_aventure_accomodations_categories');
-			$data['accomodations'] = "<a href = '" . base_url() . 'hebergement/de-la-parc/' . $accomodation->row()->url . "' style='margin-left: 15px'>" .  $query->row()->title  . " Logements</a>";
+		
+
+				$URLquery ="select acc.*, par.url as parentURL from afric_aventure_accomodations_categories acc inner join afric_aventure_accomodations_categories par on acc.parent = par.id where acc.id = " . $query->row()->accomodation_park;
+
+			$parentObj = $this->db->query($URLquery);
+
+
+
+			$parentURL = $parentObj->row()->parentURL;
+			$accomodationURL = $parentObj->row()->url;
+
+
+			$data['accomodations'] = "<a href = '" . base_url() . 'logements/' . $parentURL . '/' . $accomodationURL . "' style='margin-left: 15px'>" .  $query->row()->title  . " Logements</a>";
+
 		}
 
 
@@ -238,7 +251,7 @@ class Fr extends CI_Controller {
 		$this->load->view('simple_summary_page',$data);
 		$this->load->view('footer');
 	}
-	public function hebergement($url,$accomodation_url)
+	public function logements($url,$accomodation_url)
 	{
 
 		$accomodations_array =array();
@@ -249,10 +262,13 @@ class Fr extends CI_Controller {
 
 		$this->db->where('url', $url);
 		$par=$this->db->get('afric_aventure_accomodations_categories');
+       
+   
+		
 
+		// $header['fr']='logements/' . $par->row()->url . '/' . $accomodation_category->row()->url;
 
-		//$header['fr']='hebergement/' . $par->row()->url . '/' . $accomodation_category->row()->url;
-		$header['en']='accommodations/' . $par->row()->en_url . '/'  . $accomodation_category->row()->en_url;
+		$header['en']='accommodations' . '/'. $par->row()->en_url  .  '/' . $accomodation_category->row()->en_url;
 
 		$this->db->where('category', $accomodation_category_id);
 		$accomodations=$this->db->get('afric_aventure_accomodations');

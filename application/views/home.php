@@ -8,9 +8,11 @@
               <div class="carousel-inner">
                     
                      <?php 
+                    
                     $i=0;
                      foreach($slider->result() as $image): ?>
-                      <?php if($i==0): ?>
+                     
+                      <?php if( $i==0) : ?>
                 <div class="active item"> 
                 <?php else: ?>
                 <div class="item">
