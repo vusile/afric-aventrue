@@ -277,8 +277,9 @@ class Backend extends CI_Controller {
 			$beachRank = array ('rank' => $lowerBeach->rank);
 			$this->db->where('id', $beach->id);
 			$this->db->update('afric_aventure_beach_vacations',$beachRank);
-		}
-		redirect('/backend/afric_aventure_beach_vacations/1');
+		}   
+		$page=$beach->category;
+		redirect('backend/afric_aventure_beach_vacations/' . $page);
 
 	}	
 
@@ -294,7 +295,7 @@ class Backend extends CI_Controller {
 		$this->db->limit(1);
 		$higherBeachObj = $this->db->get('afric_aventure_beach_vacations');
 
-		if($higherBeachObj->num_rows > 0)
+		if($higherBeachObj->num_rows > 0 )
 		{
 
 			$higherBeach = $higherBeachObj->row();
@@ -306,13 +307,16 @@ class Backend extends CI_Controller {
 			$beachRank = array ('rank' => $higherBeach->rank);
 			$this->db->where('id', $beach->id);
 			$this->db->update('afric_aventure_beach_vacations',$beachRank);
+            
 		}
-		 if($this->uri->segment(3) ==1){
-		 	 redirect('/backend/afric_aventure_beach_vacations/1');
-		 }
-        else{
-        	redirect('/backend/afric_aventure_beach_vacations/2');
-        }
+		$page=$beach->category;
+		redirect('backend/afric_aventure_beach_vacations/' . $page);
+			
+
+
+	
+		
+		 	
 	}
 
 
@@ -437,7 +441,8 @@ class Backend extends CI_Controller {
 			$this->db->where('id', $safari->id);
 			$this->db->update('afric_aventure_safaris',$safariRank);
 		}
-
+        $page=$safari->category;
+		redirect('backend/afric_aventure_safaris/' . $page);
 	}	
 
 	function move_safari_up($safariID)
@@ -465,7 +470,8 @@ class Backend extends CI_Controller {
 			$this->db->where('id', $safari->id);
 			$this->db->update('afric_aventure_safaris',$safariRank);
 		}
-
+         $page=$safari->category;
+		redirect('backend/afric_aventure_safaris/' . $page);
 	}
 	
  
