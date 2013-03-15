@@ -62,7 +62,7 @@
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="email_confirmation">Confirm E-mail:</label>
+                <label class="control-label" for="email_confirmation">Confirmation d'E-mail:</label>
                 <div class="controls">
                   
                     <?php echo form_error('email_confirmation'); ?>
@@ -89,6 +89,7 @@
           
                  <div class="span7">
                   <div class="social_icons">
+                      <p id="contact_text_call"> Nous aimerions nous entretenir quelques minutes avec vous. N’hésitez pas à nous appeler sur Skype ou à nous laisser votre numéro de téléphone.</p>
                  <script type="text/javascript" src="http://cdn.dev.skype.com/uri/skype-uri.js"></script>
                   <div id="genSkypeCall_01">
                       <script type="text/javascript">
@@ -109,102 +110,44 @@
                  </div>
             </div> <!--  end of row -->
             <div class="row">
-              <div class="span11">
-               <legend style="margin-right:30px">Détails d'Arrivée:</legend>
-               <p>La Date Voulue d'Arrivée en Tanzanie</p>
-               </div> <!--  end of span11 -->
-               <div class="span6 ">
-                <div class="groupe">
-              <div class="control-groupA">
-                <label class="control-label " for="estimated_date_of_arrival">Estimé:</label>
-                <div class="controls">
-                  
-                    <?php echo form_error('estimated_date_of_arrival'); ?>
-                  <input type="text"  id="estimated_date_of_arrival" name="estimated_date_of_arrival" value="<?php echo set_value('estimated_date_of_arrival'); ?>" placeholder="DD/MM/YY" required>
-
-                </div>
-              </div>
-              </div>
-            </div>   <!-- end of span6 -->
-
-
              <div class="span6">
-                  <div class="groupa">
-                 <div class="control-group">
-                <label class="control-label" for="accurate_date_of_arrival">Exact:</label>
-                <div class="controls">
-                  
-                    <?php echo form_error('accurate_date_of_arrival'); ?>
-                  <input type="text" id="accurate_date_of_arrival" name="accurate_date_of_arrival" value="<?php echo set_value('accurate_date_of_arrival'); ?>" placeholder="DD/MM/YY" required>
-
-                </div>
-              </div>
-            </div><!-- end of span6 -->
-            </div>
-            </div>  <!-- end of row -->
-            <div class="row">
-              <div class="span11">
-             <p>Combien de Jours ?</p>
-             </div>
-            <div class="span6">
-               <div class="groupe">
+              <div class="groupe">
               <div class="control-groupA">
-                <label class="control-label" for="days_for_parks">Parcs:</label>
+                <label class="control-label" for="no_of_adults">Nombre d'adultes:</label>
                 <div class="controls">
-                  
-                    <?php echo form_error('days_for_parks'); ?>
-                  <input type="text"  id="days_for_parks" name="days_for_parks" value="<?php echo set_value('days_for_parks'); ?>" placeholder="" onchange="Adder()" required>
-                 
+                   <?php echo form_error('no_of_adults'); ?>
+                  <input type="text" id="no_of_adults" name="no_of_adults" value="<?php echo set_value('no_of_adults'); ?>" placeholder="" required>
 
                 </div>
               </div>
               </div>
               
             </div>   <!-- end of span6 -->
-         
-             
              <div class="span6">
-                <div class="groupa">
-                 <div class="control-group">
-                <label class="control-label accurate" for="days_for_beaches">Plages:</label>
+             <div class="groupa">
+              <div class="control-groupA">
+                 <label class="control-label" for="no_of_rooms">Nombre de chambres:</label>
                 <div class="controls">
-                   
-                    <?php echo form_error('days_for_beaches'); ?>
-                   <input type="text"  id="days_for_beaches" name="days_for_beaches" value="<?php echo set_value('days_for_parks'); ?>" placeholder="" onchange="Adder()" required>
+                   <?php echo form_error('no_of_rooms'); ?>
+                  <input type="text" id="no_of_rooms" name="no_of_rooms" value="<?php echo set_value('no_of_rooms'); ?>" placeholder="" required>
 
                 </div>
               </div>
-            </div>
-            </div>
-
-          </div><!--  end of row -->
-
-            <div class="row"> <!--  start of row -->
-              <div class="span12">  <!-- start of span 9 -->
-                <div id="total_days">
-                 <div class="control-group">
-                <label class="control-label " for="Result">Total:</label>
-                <div class="controls">
-                  
-                  <input type="text" id="Result" name="Result">
-                </div>
               </div>
-
-                </div>
-              </div> <!--  end of span12 -->
-            </div>   <!--  end of row -->
+              </div>
+            
+             </div>  <!-- end of row -->
 
             <div class="row">
                <div class="span6">
               <div class="groupe">
               <div class="control-groupA">
-                <label class="control-label" for="no_of_children">No. d'Enfants <em> (Âge Entre 5 et 12 ans)</em>:</label>
+                <label class="control-label" for="no_of_children">No. d'Enfants:</label>
                 <div class="controls">
                   
                     <?php echo form_error('no_of_children'); ?>
                   <input type="text" id="no_of_children" name="no_of_children" value="<?php echo set_value('no_of_children'); ?>" placeholder="">
-                 <!--  <p style="margin-left:214px;margin-top:-24px;"><em>(Between 5 and 12 years old)</em></p>
- -->
+               
 
                 </div>
               </div>  </div>
@@ -213,11 +156,10 @@
              <div class="span6">
              <div class="groupa">
               <div class="control-groupA">
-                <label class="control-label" for="no_of_adults">No. d'Adultes:</label>
+               <label class="control-label" for="ages_of_children">Ages:<em>(séparés par des virgules)</em></label>
                 <div class="controls">
-                  
-                    <?php echo form_error('no_of_adults'); ?>
-                  <input type="text" id="no_of_adults" name="no_of_adults" value="<?php echo set_value('no_of_adults'); ?>" placeholder="" required>
+                   <?php echo form_error('ages_of_children'); ?>
+                  <input type="text" id="ages_of_children" name="ages_of_children" value="<?php echo set_value('ages_of_children'); ?>" placeholder="eg: 7, 10, 14" required>
 
                 </div>
               </div>
@@ -227,27 +169,11 @@
              
              </div>  <!-- end of row -->
 
-              <div class="row">
-             <div class="span12">
-              <div class="groupe">
-              <div class="control-groupA">
-                <label class="control-label" for="rooms">No. de Pièces:</label>
-                <div class="controls">
-                  
-                    <?php echo form_error('no_of_rooms'); ?>
-                  <input type="text" id="no_of_rooms" name="no_of_rooms" value="<?php echo set_value('no_of_rooms'); ?>" placeholder="" required>
-
-                </div>
-              </div>
-              </div>
-              
-            </div>   <!-- end of span12 -->
             
-             </div>  <!-- end of row -->
             <!--  <br><br><br><br><br><br> -->
             <div class="row">
               <div class="span12">
-                  <p>Votre Budget par Personne (le Vol international non Inclus)</p>
+                  <p>Votre budget par personne (vol international non inclus)</p>
               </div>
             </div>
            
@@ -286,10 +212,91 @@
             </div> <!--  end of span 6 -->
             </div> <!--  end of row -->
             <div class="row">
-               <div class="span11">
-               <legend style="margin-right:30px">La tournée Détaille:</legend>
-             <p>Quels Secteurs vous êtes le Plus Intéressé en? <em>(Cliqueter + Ctrl pour choisir plus qu'un secteur)</em> </p>
-               </div> <!--  end of span11 -->
+               <div class="span12">
+               <legend class="legend_align">Détail du séjour:</legend>
+                 <div class="row">
+              <div class="span12">
+               <p> Date prévue d’arrivée en Tanzanie</p>
+               </div> <!--  end of span12 -->
+               <div class="span6 ">
+                <div class="groupe">
+              <div class="control-groupA">
+                <label class="control-label estimated" for="estimated_date_of_arrival">Estimée:</label>
+                <div class="controls">
+                   <?php echo form_error('estimated_date_of_arrival'); ?>
+                  <input type="text"  id="estimated_date_of_arrival" name="estimated_date_of_arrival" value="<?php echo set_value('estimated_date_of_arrival'); ?>" placeholder="DD/MM/YY" required>
+
+                </div>
+              </div>
+              </div>
+            </div>   <!-- end of span6 -->
+
+
+             <div class="span6">
+                  <div class="groupa">
+                 <div class="control-group">
+                <label class="control-label accurate" for="accurate_date_of_arrival">Exacte:</label>
+                <div class="controls">
+                   <?php echo form_error('accurate_date_of_arrival'); ?>
+                  <input type="text" id="accurate_date_of_arrival" name="accurate_date_of_arrival" value="<?php echo set_value('accurate_date_of_arrival'); ?>" placeholder="DD/MM/YY" required>
+
+                </div>
+              </div>
+            </div><!-- end of span6 -->
+            </div>
+            </div>  <!-- end of row -->
+            <div class="row">
+              <div class="span11">
+             <p>Durée du séjour:</p>
+             </div>
+            <div class="span6">
+               <div class="groupe">
+              <div class="control-groupA">
+                <label class="control-label" for="days_for_parks">en Safari:</label>
+                <div class="controls">
+                   <?php echo form_error('days_for_parks'); ?>
+                  <input type="text"  id="days_for_parks" name="days_for_parks" value="<?php echo set_value('days_for_parks'); ?>" placeholder="" onchange="Adder()" required>
+                 
+
+                </div>
+              </div>
+              </div>
+              
+            </div>   <!-- end of span6 -->
+         
+             
+             <div class="span6">
+                <div class="groupa">
+                 <div class="control-group">
+                <label class="control-label accurate" for="days_for_beaches">à la Plage:</label>
+                <div class="controls">
+                    <?php echo form_error('days_for_beaches'); ?>
+                   <input type="text"  id="days_for_beaches" name="days_for_beaches" value="<?php echo set_value('days_for_parks'); ?>" placeholder="" onchange="Adder()" required>
+
+                </div>
+              </div>
+            </div>
+            </div>
+
+          </div><!--  end of row -->
+
+            <div class="row"> <!--  start of row -->
+              <div class="span12">  <!-- start of span 12 -->
+                <div id="total_days">
+                 <div class="control-group">
+                <label class="control-label " for="Result">Durée totale du séjour:</label>
+                <div class="controls">
+                  <input type="text" id="Result" name="Result">
+                </div>
+              </div>
+
+                </div>
+              </div> <!--  end of span12 -->
+            </div>   <!--  end of row -->
+
+
+             <p>Les destinations qui vous intèressent?<em>(Cliqueter + Ctrl pour choisir plus qu'un secteur)</em> </p>
+               </div> <!--  end of span12 -->
             </div>
              <div class="row">
                    <div class="span6">
@@ -333,7 +340,7 @@
          </div>
          <div class="row">
             <div class="span12">
-           <p>Quels Thèmes vous font aime le Plus? <em> (Cliqueter + Ctrl pour choisir plus qu'un thème)</em> </p>
+           <p>Les thèmes qui vous intèressent? <em> (Cliqueter + Ctrl pour choisir plus qu'un thème)</em> </p>
                 
                    <div class="groupe">
                    
@@ -341,25 +348,22 @@
                 <label class="control-label accurate" for="themes">Thèmes:</label>
                 <div class="controls">
                   <select   multiple="multiple"name="themes_i_like_the_most[]" required style = "height: 200px;"  id="themes_i_like_the_most" value="<?php echo set_value('themes_i_like_the_most'); ?>">
-             
-                 <optgroup  label="Thèmes vacances à la Plage">
-                  <?php foreach($beaches_afric_aventure_beach_vacations->result() as $themed): ?> 
-                 
-                  <option value="<?php echo $themed->title  ?>"><?php echo $themed->title ?></option>
-                <?php endforeach; ?>
-                 <optgroup>
-                 <option label="" ></option> 
-                  <optgroup  label="Thèmes de safari">
+                <optgroup  label="Thèmes de safari">
                     <?php foreach($themed_afric_aventure_safaris->result() as $themes): ?> 
                  
                 <option><?php echo $themes->title ?></option>
                   
                 <?php endforeach; ?>
               </optgroup>
-                
-
-                
-
+              <option label="" ></option>
+                 <optgroup  label="Thèmes plage"> 
+                  <?php foreach($beaches_afric_aventure_beach_vacations->result() as $themed): ?> 
+                 
+                  <option value="<?php echo $themed->title  ?>"><?php echo $themed->title ?></option>
+                <?php endforeach; ?>
+                 <optgroup>
+                  
+          
                 </select>
 
                 </div>
@@ -372,13 +376,15 @@
             
                    <div class="span12">
                 
-                 <div class="control-groupA">
-                 <label class="control-label" for="" style="width:250px; margin-left:60px;">Combien de fois avoir vous a voyagé à l'Afrique?</label>
-                <div class="controls">
-                 
-                  
-                    <?php echo form_error('no_of_travels_to_afrika'); ?>
-                  <input type="text" id="no_of_travels_to_afrika" name="no_of_travels_to_afrika" value="<?php echo set_value('no_of_travels_to_afrika'); ?>" placeholder="" style="float: right;margin-right: 375px;margin-top: -30px;">
+                <div class="control-groupA">
+                 <label class="control-label sub_sahala_label" for="">Avez-vous déjà voyagé en Afrique Sub-Saharienne?</label><br>
+                <div class="controls inline_checkbox">
+                  <label class="checkbox inline">
+                <input type="checkbox" id="no_of_travels_to_afrika" value="<?php echo set_value('no_of_travels_to_afrika'); ?>"> Oui
+                </label>
+                <label class="checkbox inline">
+                <input type="checkbox" id="no_of_travels_to_afrika2" value="<?php echo set_value('no_of_travels_to_afrika2'); ?>"> Non
+                </label>
 
                 </div>
               </div>
@@ -386,10 +392,10 @@
            
              </div>  <!-- end of row -->
              <div class="row">
-              <div class="span11">
-               <legend style="margin-right:30px">D'autres:</legend>
-               <p>Vous a fait comment Atteint Notre site Web?</p>
-               </div> <!--  end of span11 -->
+              <div class="span12">
+               <legend class="legend_align">Autre:</legend>
+               <p> Comment avez- vous trouvé notre site Web?</p>
+               </div> <!--  end of span12 -->
              </div> <!-- end of row -->
       
                
@@ -406,7 +412,7 @@
               </div>  <!-- end of groupe -->
               </div>  <!-- end of span12 -->
             </div>   <!-- end of row -->
-                 <p style="margin-top:10px;">Utres Commentaires:</p>
+                 <p style="margin-top:10px;">Autres:</p>
                  <div class="row">
                <div class="span12">
                <!--  <div class="groupe"> -->
@@ -416,8 +422,7 @@
                   </div>
               <div id="captcha_wrapper">
                <?php echo $cap['image'] ?>
-           <p>Prouvent s'il vous plaît Que Vous Etes Humain en Entrant Les Caractères Dans Une Image
-Au-dessus</p>
+           <p>Merci de confirmer que vous ètes humain en recopiant les caractères de l'image a-dessus</p>
             </div>
                <div class="groupe">
               <div class="control-groupA">
@@ -427,7 +432,7 @@ Au-dessus</p>
               </div>
             </div>
             </div>
-               <button type="submit" class="btn">Envoyer le Message</button>
+               <button type="submit" class="btn">Envoyer</button>
             <!--  </div> --> <!--  end of groupe -->
             </div>  <!-- end of span -->
             </div>  <!-- end of row -->

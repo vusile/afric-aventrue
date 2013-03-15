@@ -36,11 +36,20 @@ class Fr extends CI_Controller {
 				if($this->uri->segment(1) ==  $page->url)
 					$menu .= " active ";
 
+				$class = '';
+				$subClass = '';
+
+				if($page->url == 'vacances-plage')
+				{
+					$class .= '-blue beach';
+					$subClass .= 'sub-beach';
+				}
+
 				$menu .="'><a data-toggle='dropdown' class='dropdown-toggle' href = '" . current_url() . "'>"  . $page->title .  "<b class='caret'></b></a><ul class='dropdown-menu'>";
 			
 				$this->db->where('parent', 0);
 				$categories = $this->db->get($page->draws_from);
-		
+				$subClass = "";
 
 				foreach($categories->result() as $category)
 				{
@@ -49,7 +58,27 @@ class Fr extends CI_Controller {
 					$cats = $this->db->get($page->draws_from);
 
 					if($cats->num_rows() == 0)
-						$menu .= "<li><a href = '" . $page->url . '/' . $category->url . "'>"  . $category->title .  "</a></li>";
+					{
+
+						if(!isset( $category->draws_from) )
+							$menu .= "<li><a href = '" . $page->url . '/' . $category->url . "'>"  . $category->title .  "</a></li>";
+
+						else
+						{
+							$this->db->order_by('rank');
+							$this->db->where('category', $category->id);
+							$newSubs = $this->db->get($category->draws_from);
+
+							$menu .= "<li class = 'dropdown-submenu'><a class = '". $subClass ."' href = '" . $page->url . '/' . $category->url . "'>"  . $category->title .  "</a><ul class='dropdown-menu'>";
+
+							foreach($newSubs->result() as $newSub)
+							{
+								$menu .= "<li><a class = '". $subClass ."' href = '" . $category->url_prefix . '/'  . $newSub->url . "'>"  . $newSub->title .  "</a></li>";
+							}
+
+							$menu .= '</ul></li>';
+						}
+					}
 
 					else {
 						$menu .= "<li class = 'dropdown-submenu'><a href = '" . current_url() . "'>"  . $category->title .  "</a><ul class='dropdown-menu'>";
@@ -106,6 +135,7 @@ class Fr extends CI_Controller {
 	{    
 
 		$menu['menu'] = $this->menu();
+		$this->db->order_by('rank', 'asc'); 
 		$data['slider'] = $this->db->get('afric_aventure_slider');
 		$this->db->where('url', 'home');
 		$result=$this->db->get('afric_aventure_pages');
@@ -128,6 +158,7 @@ class Fr extends CI_Controller {
 	{   
 		$this->load->helper('text');
 		$header['color']='#091626';
+		$header['color_nav']='#c6d9f1';
 		$this->db->where('url', $url);
 		$result=$this->db->get('afric_aventure_beach_vacation_categories');
 
@@ -150,6 +181,7 @@ class Fr extends CI_Controller {
 	public function plage($url)
 	{   
 		$header['color']='#091626';
+		$header['color_nav']='#e1ebf8';
 		$this->db->where('url', $url);
 		$query = $this->db->get('afric_aventure_beach_vacations');
 		$data['title'] = $query->row()->title;
@@ -196,9 +228,20 @@ class Fr extends CI_Controller {
 
 		if($query->row()->accomodation_park != 0)
 		{
-			$this->db->where('id',$query->row()->accomodation_park);
-			$accomodation=$this->db->get('afric_aventure_accomodations_categories');
-			$data['accomodations'] = "<a href = '" . base_url() . 'hebergement/de-la-parc/' . $accomodation->row()->url . "' style='margin-left: 15px'>" .  $query->row()->title  . " Hebergements</a>";
+		
+
+				$URLquery ="select acc.*, par.url as parentURL from afric_aventure_accomodations_categories acc inner join afric_aventure_accomodations_categories par on acc.parent = par.id where acc.id = " . $query->row()->accomodation_park;
+
+			$parentObj = $this->db->query($URLquery);
+
+
+
+			$parentURL = $parentObj->row()->parentURL;
+			$accomodationURL = $parentObj->row()->url;
+
+
+			$data['accomodations'] = "<a href = '" . base_url() . 'logements/' . $parentURL . '/' . $accomodationURL . "' style='margin-left: 15px'>" .  $query->row()->title  . " Logements</a>";
+
 		}
 
 
@@ -208,7 +251,7 @@ class Fr extends CI_Controller {
 		$this->load->view('simple_summary_page',$data);
 		$this->load->view('footer');
 	}
-	public function hebergement($url,$accomodation_url)
+	public function logements($url,$accomodation_url)
 	{
 
 		$accomodations_array =array();
@@ -219,10 +262,13 @@ class Fr extends CI_Controller {
 
 		$this->db->where('url', $url);
 		$par=$this->db->get('afric_aventure_accomodations_categories');
+       
+   
+		
 
+		// $header['fr']='logements/' . $par->row()->url . '/' . $accomodation_category->row()->url;
 
-		//$header['fr']='hebergement/' . $par->row()->url . '/' . $accomodation_category->row()->url;
-		$header['en']='accommodations/' . $par->row()->en_url . '/'  . $accomodation_category->row()->en_url;
+		$header['en']='accommodations' . '/'. $par->row()->en_url  .  '/' . $accomodation_category->row()->en_url;
 
 		$this->db->where('category', $accomodation_category_id);
 		$accomodations=$this->db->get('afric_aventure_accomodations');

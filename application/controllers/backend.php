@@ -141,24 +141,28 @@ class Backend extends CI_Controller {
 
 				$this->db->where('id',$primary_key);
 				$safari=$this->db->get('afric_aventure_safaris');
-				if($safari->row()->accomodation_park == 0)
-				{
+	
 					$datas = array(
 						'title'=>$post_array['title'],
 						'en_title'=>$post_array['en_title'],
 						'parent'=>1
 					);
 					
-					$this->db->insert('afric_aventure_accomodations_categories', $datas);
-					$id = $this->db->insert_id();
-					$datas = array();
-					$data['accomodation_park'] = $id;
+					if($safari->row()->accomodation_park == 0)
+					{
+						$this->db->insert('afric_aventure_accomodations_categories', $datas);
+						$id = $this->db->insert_id();
+						$datas = array();
+						$data['accomodation_park'] = $id;
+					}
+
+					else $id = $safari->row()->accomodation_park;
 
 					$datas['url']=$this->make_url_from_title($post_array['title'],'afric_aventure_accomodations_categories',$id);
 					$datas['en_url']=$this->make_url_from_title($post_array['en_title'],'afric_aventure_accomodations_categories',$id,1);
 					$this->db->where('id', $id);
 					$this->db->update('afric_aventure_accomodations_categories', $datas);
-				}
+				
 			}
 
 		}
@@ -170,8 +174,7 @@ class Backend extends CI_Controller {
 			{
 				$this->db->where('id',$primary_key);
 				$beach=$this->db->get('afric_aventure_beach_vacations');
-				if($beach->row()->accomodation_beach == 0)
-				{
+				
 
 					$datas = array(
 						'title'=>$post_array['title'],
@@ -179,14 +182,19 @@ class Backend extends CI_Controller {
 						'parent'=>2
 					);
 					
-					$this->db->insert('afric_aventure_accomodations_categories', $datas);
-					$id = $this->db->insert_id();
-					$data['accomodation_beach'] = $id;
+					if($beach->row()->accomodation_beach == 0)
+					{
+						$this->db->insert('afric_aventure_accomodations_categories', $datas);
+						$id = $this->db->insert_id();
+						$data['accomodation_beach'] = $id;
+					}
+					else $id = $beach->row()->accomodation_beach;
+
 					$datas['url']=$this->make_url_from_title($post_array['title'],'afric_aventure_accomodations_categories',$id);
 					$datas['en_url']=$this->make_url_from_title($post_array['en_title'],'afric_aventure_accomodations_categories',$id,1);
 					$this->db->where('id', $id);
 					$this->db->update('afric_aventure_accomodations_categories', $datas);
-				}
+				
 			}
 		}
 
@@ -212,30 +220,187 @@ class Backend extends CI_Controller {
 	function afric_aventure_slider()
 	{
 		$crud = new grocery_CRUD();
- 
+ 		$crud->order_by('rank');
         $crud->set_table('afric_aventure_slider');
         $crud->required_fields('photo');
+        $crud->unset_fields('rank');
+        $crud->unset_columns('rank');
         $crud->set_field_upload('photo','assets/uploads/files');
         $crud->display_as('photo','Photo (Must be 940 x 400 pixels)');
+     //	$crud->display_as('rank','Photo Rank (Must be greater than 0)');
+   		$crud->add_action('Move Down', 'img/movedownbtn.png', 'backend/move_slider_down');
+		$crud->add_action('Move Up', 'img/moveupbtn.png', 'backend/move_slider_up');
         $output = $crud->render();
 
         $this->_example_output($output);       
+	}
+
+	function move_slider_down($sliderID)
+	{
+		$this->db->where('id', $sliderID);
+		$sliderObj=$this->db->get('afric_aventure_slider');
+		$slider = $sliderObj->row();
+
+
+		$this->db->where('rank >', $slider->rank);
+		$this->db->limit(1);
+		$lowerSliderObj = $this->db->get('afric_aventure_slider');
+
+		if($lowerSliderObj->num_rows > 0)
+		{
+
+			$lowerSlider = $lowerSliderObj->row();
+
+			$lowerSliderRank = array ('rank' => $slider->rank);
+			$this->db->where('id', $lowerSlider->id);
+			$this->db->update('afric_aventure_slider',$lowerSliderRank);
+
+			$sliderRank = array ('rank' => $lowerSlider->rank);
+			$this->db->where('id', $slider->id);
+			$this->db->update('afric_aventure_slider',$sliderRank);
+		}   
+
+		redirect('backend/afric_aventure_slider');
+
 	}	
-	function afric_aventure_beach_vacations()
+
+	function move_slider_up($sliderID)
+	{
+		$this->db->where('id', $sliderID);
+		$sliderObj=$this->db->get('afric_aventure_slider');
+		$slider = $sliderObj->row();
+
+		$this->db->where('rank <', $slider->rank);
+		$this->db->order_by('rank','desc');
+		$this->db->limit(1);
+		$higherSliderObj = $this->db->get('afric_aventure_slider');
+
+		if($higherSliderObj->num_rows > 0 )
+		{
+
+			$higherSlider = $higherSliderObj->row();
+
+			$higherSliderRank = array ('rank' => $slider->rank);
+			$this->db->where('id', $higherSlider->id);
+			$this->db->update('afric_aventure_slider',$higherSliderRank);
+
+			$sliderRank = array ('rank' => $higherSlider->rank);
+			$this->db->where('id', $slider->id);
+			$this->db->update('afric_aventure_slider',$sliderRank);
+            
+		}
+
+		redirect('backend/afric_aventure_slider');
+
+		 	
+	}
+
+
+
+
+
+
+	function afric_aventure_beach_vacations($category)
 	{
 		$crud = new grocery_CRUD();
- 
+
+		$crud->order_by('rank');
+		$crud->add_action('Move Down', 'img/movedownbtn.png', 'backend/move_beach_down');
+		$crud->add_action('Move Up', 'img/moveupbtn.png', 'backend/move_beach_up');
+ 		$crud->where('category',$category);
         $crud->set_table('afric_aventure_beach_vacations');
         $crud->set_relation('category','afric_aventure_beach_vacation_categories','title');
         $crud->columns('title' ,'en_title','category','text' ,'en_text');
         $crud->fields('title' ,'en_title','category','text' ,'en_text');
-        //$crud->callback_before_insert(array($this,'insert_beach_vacation'));
+        $crud->display_as('rank','Rank (Must be greater than 0)');
+        $crud->callback_before_insert(array($this,'insert_beach_vacation'));
         $crud->callback_after_insert(array($this, 'generate_thumb'));
 		$crud->callback_after_update(array($this, 'generate_thumb'));
+
+		$crud->callback_before_delete(array($this,'beach_callback'));
+
         $output = $crud->render();
 
         $this->_example_output($output);       
+	}
+
+	function move_beach_down($beachID)
+	{
+		$this->db->where('id', $beachID);
+		$beachObj=$this->db->get('afric_aventure_beach_vacations');
+		$beach = $beachObj->row();
+
+		$this->db->where('category', $beach->category);
+		$this->db->where('rank >', $beach->rank);
+		$this->db->limit(1);
+		$lowerBeachObj = $this->db->get('afric_aventure_beach_vacations');
+
+		if($lowerBeachObj->num_rows > 0)
+		{
+
+			$lowerBeach = $lowerBeachObj->row();
+
+			$lowerBeachRank = array ('rank' => $beach->rank);
+			$this->db->where('id', $lowerBeach->id);
+			$this->db->update('afric_aventure_beach_vacations',$lowerBeachRank);
+
+			$beachRank = array ('rank' => $lowerBeach->rank);
+			$this->db->where('id', $beach->id);
+			$this->db->update('afric_aventure_beach_vacations',$beachRank);
+		}   
+		$page=$beach->category;
+		redirect('backend/afric_aventure_beach_vacations/' . $page);
+
 	}	
+
+	function move_beach_up($beachID)
+	{
+		$this->db->where('id', $beachID);
+		$beachObj=$this->db->get('afric_aventure_beach_vacations');
+		$beach = $beachObj->row();
+
+		$this->db->where('category', $beach->category);
+		$this->db->where('rank <', $beach->rank);
+		$this->db->order_by('rank','desc');
+		$this->db->limit(1);
+		$higherBeachObj = $this->db->get('afric_aventure_beach_vacations');
+
+		if($higherBeachObj->num_rows > 0 )
+		{
+
+			$higherBeach = $higherBeachObj->row();
+
+			$higherBeachRank = array ('rank' => $beach->rank);
+			$this->db->where('id', $higherBeach->id);
+			$this->db->update('afric_aventure_beach_vacations',$higherBeachRank);
+
+			$beachRank = array ('rank' => $higherBeach->rank);
+			$this->db->where('id', $beach->id);
+			$this->db->update('afric_aventure_beach_vacations',$beachRank);
+            
+		}
+		$page=$beach->category;
+		redirect('backend/afric_aventure_beach_vacations/' . $page);
+			
+
+
+	
+		
+		 	
+	}
+
+
+	 function beach_callback($primary_key)
+		{
+			$this->db->where('id',$primary_key);
+			$data = $this->db->get('afric_aventure_beach_vacations');
+			$id=$data->row()->accomodation_beach;
+			$this->db->delete('afric_aventure_accomodations_categories', array('id' => $id)); 
+
+
+		}	
+
+
 
 	function insert_beach_vacation($post_array)
 	{
@@ -262,8 +427,8 @@ class Backend extends CI_Controller {
 		$crud = new grocery_CRUD();
  
         $crud->set_table('afric_aventure_beach_vacation_categories');
-        $crud->unset_fields('parent','url','en_url');
-        $crud->unset_columns('parent','url','en_url');
+        $crud->unset_fields('parent','url','en_url','url_prefix','en_url_prefix','draws_from');
+        $crud->unset_columns('parent','url','en_url','url_prefix','en_url_prefix','draws_from');
         $crud->callback_after_insert(array($this, 'generate_thumb'));
 		$crud->callback_after_update(array($this, 'generate_thumb'));
         $output = $crud->render();
@@ -276,7 +441,10 @@ class Backend extends CI_Controller {
 		$crud = new grocery_CRUD();
  
         //$crud->set_table('afric_aventure_beach_vacation_categories');
-        $crud->set_relation('parent','afric_aventure_accomodations_categories','title');
+       // $crud->set_relation('parent','afric_aventure_accomodations_categories','title');
+	    $crud->unset_fields('parent','url','en_url');
+        $crud->unset_columns('parent','url','en_url');
+		$crud->where('parent',0);
         $crud->callback_after_insert(array($this, 'generate_thumb'));
 		$crud->callback_after_update(array($this, 'generate_thumb'));
         $output = $crud->render();
@@ -290,8 +458,8 @@ class Backend extends CI_Controller {
  
         //$crud->set_table('afric_aventure_safaris_categories');
        // $crud->set_relation('parent','afric_aventure_pages','title');
-		$crud->unset_fields('parent','url','en_url');
-        $crud->unset_columns('parent','url','en_url');
+           $crud->unset_fields('parent','url','en_url','url_prefix','en_url_prefix','draws_from');
+        $crud->unset_columns('parent','url','en_url','url_prefix','en_url_prefix','draws_from');
   		$crud->callback_after_insert(array($this, 'generate_thumb'));
 		$crud->callback_after_update(array($this, 'generate_thumb'));
         $output = $crud->render();
@@ -299,44 +467,94 @@ class Backend extends CI_Controller {
         $this->_example_output($output);       
 	}
 
-	function afric_aventure_safaris()
+	function afric_aventure_safaris($category)
 	{
 		$crud = new grocery_CRUD();
- 
+        $crud->where('category',$category);
+        $crud->order_by('rank');
+   		$crud->add_action('Move Down', 'img/movedownbtn.png', 'backend/move_safari_down');
+		$crud->add_action('Move Up', 'img/moveupbtn.png', 'backend/move_safari_up');
         $crud->set_table('afric_aventure_safaris');
         $crud->set_relation('category','afric_aventure_safaris_categories','title');
         $crud->columns('title' ,'en_title','category','text' ,'en_text');
         $crud->fields('title' ,'en_title','category','text' ,'en_text');
+         $crud->display_as('rank','Rank (Must be greater than 0)');
        // $crud->callback_before_insert(array($this,'insert_safari_vacation'));
         $crud->callback_after_insert(array($this, 'generate_thumb'));
 		$crud->callback_after_update(array($this, 'generate_thumb'));
+	    $crud->callback_before_delete(array($this,'safaris_callback'));
         $output = $crud->render();
 
         $this->_example_output($output);       
+	}
+	function move_safari_down($safariID)
+	{
+		$this->db->where('id', $safariID);
+		$safariObj=$this->db->get('afric_aventure_safaris');
+		$safari = $safariObj->row();
+
+		$this->db->where('category', $safari->category);
+		$this->db->where('rank >', $safari->rank);
+		$this->db->limit(1);
+		$lowerSafariObj = $this->db->get('afric_aventure_safaris');
+
+		if($lowerSafariObj->num_rows > 0)
+		{
+
+			$lowerSafari = $lowerSafariObj->row();
+
+			$lowerSafariRank = array ('rank' => $safari->rank);
+			$this->db->where('id', $lowerSafari->id);
+			$this->db->update('afric_aventure_safaris',$lowerSafariRank);
+
+			$safariRank = array ('rank' => $lowerSafari->rank);
+			$this->db->where('id', $safari->id);
+			$this->db->update('afric_aventure_safaris',$safariRank);
+		}
+        $page=$safari->category;
+		redirect('backend/afric_aventure_safaris/' . $page);
 	}	
 
-
-	function insert_safari_vacation($post_array)
+	function move_safari_up($safariID)
 	{
-		if($post_array['category']==1)
+		$this->db->where('id', $safariID);
+		$safariObj=$this->db->get('afric_aventure_safaris');
+		$safari = $safariObj->row();
+
+		$this->db->where('category', $safari->category);
+		$this->db->where('rank <', $safari->rank);
+		$this->db->order_by('rank','desc');
+		$this->db->limit(1);
+		$higherSafariObj = $this->db->get('afric_aventure_safaris');
+
+		if($higherSafariObj->num_rows > 0)
 		{
-			$data = array(
-				'title'=>$post_array['title'],
-				'en_title'=>$post_array['en_title'],
-				'parent'=>1
-			);
-			
-			$this->db->insert('afric_aventure_accomodations_categories', $data);
-			$id = $this->db->insert_id();
 
-			$post_array['accomodation_park'] = $id;
+			$higherSafari = $higherSafariObj->row();
 
-			$data['url']=$this->make_url_from_title($post_array['title'],'afric_aventure_accomodations_categories',$id);
-			$data['en_url']=$this->make_url_from_title($post_array['en_title'],'afric_aventure_accomodations_categories',$id,1);
-			$this->db->where('id', $id);
-			$this->db->update('afric_aventure_accomodations_categories', $data);
+			$higherSafariRank = array ('rank' => $safari->rank);
+			$this->db->where('id', $higherSafari->id);
+			$this->db->update('afric_aventure_safaris',$higherSafariRank);
+
+			$safariRank = array ('rank' => $higherSafari->rank);
+			$this->db->where('id', $safari->id);
+			$this->db->update('afric_aventure_safaris',$safariRank);
 		}
+         $page=$safari->category;
+		redirect('backend/afric_aventure_safaris/' . $page);
 	}
+	
+ 
+ function safaris_callback($primary_key)
+{
+  $this->db->where('id',$primary_key);
+    $data = $this->db->get('afric_aventure_safaris');
+    $id=$data->row()->accomodation_park;
+    $this->db->delete('afric_aventure_accomodations_categories', array('id' => $id)); 
+
+  
+}
+ 
 
 
 
@@ -378,7 +596,8 @@ class Backend extends CI_Controller {
 
 
         $crud->where('accomodation_id',$accomodation);
-        $crud->set_field_upload('slide_pic');
+        $crud->set_field_upload('slide_pic','assets/uploads/files/');
+         $crud->display_as('slide_pic','Photo (Must be 780 x 400 pixels)');
         $crud->unset_columns('accomodation_id');
         $crud->unset_fields('accomodation_id');
 

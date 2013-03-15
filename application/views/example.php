@@ -35,10 +35,13 @@ a:hover
 		<a href='<?php echo site_url('logout')?>'>Logout</a> |
 		<a href='<?php echo site_url('backend/afric_aventure_pages')?>'>Pages</a> |
 		<a href='<?php echo site_url('backend/afric_aventure_slider')?>'>Home Page Slider</a> |
-		<a href='<?php echo site_url('backend/afric_aventure_safaris')?>'>Safaris</a> |
 		<a href='<?php echo site_url('backend/afric_aventure_safaris_categories')?>'>Safaris Categories</a> |
-		<a href='<?php echo site_url('backend/afric_aventure_beach_vacations')?>'>Beach Vacations</a> |
+		<a href='<?php echo site_url('backend/afric_aventure_safaris/1')?>'>Parks Served</a> |
+		<a href='<?php echo site_url('backend/afric_aventure_safaris/2')?>'>Themed Safaris</a> |
 		<a href='<?php echo site_url('backend/afric_aventure_beach_vacation_categories')?>'>Beach Vacations Categories</a> |
+		<a href='<?php echo site_url('backend/afric_aventure_beach_vacations/1')?>'>Beaches Served</a> |
+		<a href='<?php echo site_url('backend/afric_aventure_beach_vacations/2')?>'>Beach Themes</a> |
+		<a href='<?php echo site_url('backend/afric_aventure_accomodations_categories')?>'>Accomodation Categories</a> | 
 		<a href='<?php echo site_url('backend/afric_aventure_accomodations')?>'>Accomodations</a> 
 		
 	
