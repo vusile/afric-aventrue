@@ -146,7 +146,7 @@ class Backend extends CI_Controller {
 					$datas = array(
 						'title'=>$post_array['title'],
 						'en_title'=>$post_array['en_title'],
-						'parent'=>2
+						'parent'=>1
 					);
 					
 					$this->db->insert('afric_aventure_accomodations_categories', $datas);
@@ -381,15 +381,7 @@ class Backend extends CI_Controller {
         $crud->set_field_upload('slide_pic');
         $crud->unset_columns('accomodation_id');
         $crud->unset_fields('accomodation_id');
-        // $crud->set_relation('category','afric_aventure_accomodations_categories','title',array("parent >" => 0));
-        //$crud->columns('accomodation_name','category','slider_photo1','slider_title_photo1','slider_teaser_photo1','slider_photo2','slider_title_photo2','slider_teaser_photo2','slider_photo3','slider_title_photo3','slider_teaser_photo3');
-        //$crud->fields('accomodation_name','category','slider_photo1','slider_title_photo1','slider_teaser_photo1','slider_photo2','slider_title_photo2','slider_teaser_photo2','slider_photo3','slider_title_photo3','slider_teaser_photo3');
-        //$crud->required_fields('slider_photo1','slider_photo2','slider_photo3');
-        //$crud->set_field_upload('slider_photo1','assets/uploads/files');
-        //$crud->set_field_upload('slider_photo2','assets/uploads/files');
-        //$crud->set_field_upload('slider_photo3','assets/uploads/files');
-       // $crud->callback_after_insert(array($this, 'generate_thumb'));
-		//$crud->callback_after_update(array($this, 'generate_thumb'));
+
         $output = $crud->render();
 
         $this->_example_output($output);       
